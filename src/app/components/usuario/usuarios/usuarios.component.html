@@ -1,0 +1,102 @@
+<header style="z-index:300;">
+  <div class="row">
+    <app-navbar></app-navbar>
+  </div>
+</header>
+
+<div class="row">
+  <div class="col-2">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="col-10 div-content">
+    <div class="animated fadeIn fast">
+
+
+      <form *ngIf="userEdit" #forma="ngForm" (ngSubmit)="actualizar(forma)">
+        <br>
+        <div class="form-row">
+          <div class="form-group col-3">
+            <label for="inputname">Nombres</label>
+            <input [(ngModel)]="userEdit.nombre_USER" name="nombre" required #nombre="ngModel" type="text" class="form-control" id="inputname" placeholder="">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="inputlastname">Apellidos</label>
+            <input [(ngModel)]="userEdit.apellidos_USER" name="apellidos" required #apellidos="ngModel" type="text" id="inputlastname" class="form-control" placeholder="">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-3">
+            <label for="inputdoc">Documento</label>
+            <input [(ngModel)]="userEdit.doc_USER" name="documento" required #documento="ngModel" type="text" readonly="readonly" class="form-control" id="inputdoc" placeholder="">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="inputemail">Correo</label>
+            <input [(ngModel)]="userEdit.correo_USER" name="correo" required #correo="ngModel" type="text" id="inputemail" class="form-control" placeholder="">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-3">
+            <label for="inputcel">Celular</label>
+            <input [(ngModel)]="userEdit.celular_USER" name="celular" required #celular="ngModel" type="text" class="form-control" id="inputcel" placeholder="">
+          </div>
+        </div>
+        <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-success">Actualizar</button>
+        <button (click)="cancelarEdit()" style="margin-left:5px;" class="btn btn-outline-primary" type="button" name="button">Cancelar</button>
+      </form>
+      <br>
+      <br>
+      <div *ngIf="estado === false" class="alert alert-danger" role="alert">
+        Ocurrio un error con la Actualizacion.
+      </div>
+      <div *ngIf="estado === true" class="alert alert-success" role="alert">
+        Informacion actualizada exitosamente!
+      </div>
+
+
+
+
+      <div *ngIf="delete" class="alert alert-success" role="alert">
+        Usuario eliminado correctamente.
+      </div>
+      <div *ngIf="delete === false" class="alert alert-danger" role="alert">
+        Ups! Ocurrio un problema inesperado :C
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Id</th>
+            <th scope="col">Documento</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of usuarios; index as i ">
+            <th scope="row">{{i + 1 }}</th>
+            <td>{{user.id_PERFIL_USER}}</td>
+            <td>{{user.doc_USER}}</td>
+            <td>{{user.nombre_USER}}</td>
+            <td>{{user.apellidos_USER}}</td>
+            <td>{{user.celular_USER}}</td>
+            <td>{{user.correo_USER}}</td>
+            <td>
+              <button (click)="editar(user)" type="button" class="btn btn-outline-primary" name="button"><i class="far fa-edit"></i></button>
+              <button (click)="eliminar(user.id_PERFIL_USER,user.doc_USER)" type="button" style="margin-left:5px;" class="btn btn-outline-danger" name="button"><i class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+
+    </div>
+  </div>
+</div>
+<footer>
+  <app-footer></app-footer>
+</footer>

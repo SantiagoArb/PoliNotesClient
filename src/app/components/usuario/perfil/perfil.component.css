@@ -1,0 +1,17 @@
+.content{
+  margin-top: 100px;
+  margin-left: 280px;
+
+}
+
+
+.img-font{
+
+  background-color: white;
+box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+  opacity: 1;
+
+}
+label{
+  color: #b1b1b5;
+}
