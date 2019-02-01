@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Usuario } from '../clases/usuario.clase';
 import { Router } from '@angular/router';
@@ -50,5 +50,15 @@ perfil:Usuario;
    deleteUser(user:Usuario){
      let usuarioJson = JSON.stringify(user);
      return this._http.post("http://localhost:8080/deleteuser",usuarioJson).pipe( map(data => data));
+   }
+
+   validarRegistro(key:string,user:string){
+     let Params = new HttpParams();
+
+   // Begin assigning parameters
+   Params = Params.append('key', key);
+   Params = Params.append('valor', user);
+     let usuarioJson = JSON.stringify(user);
+     return this._http.get("http://localhost:8080/validate",{ params:Params }).pipe( map(data => data));
    }
 }

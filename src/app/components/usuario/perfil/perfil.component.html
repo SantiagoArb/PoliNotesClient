@@ -12,11 +12,11 @@
       <app-sidebar></app-sidebar>
     </div>
     <div class="col-10 div-content">
-      <div class=" animated fadeIn fast">
+      <div class=" animated fadeIn fast content">
         <form #forma="ngForm" (ngSubmit)="actualizar(forma)">
         <br>
         <div class="form-row">
-          <div class="form-group col-4">
+          <div class="form-group col-3">
             <label for="inputname">Nickname</label>
             <input [(ngModel)]="perfil.nick_USER" name="user" required #user="ngModel" type="text" readonly="readonly" class="form-control" id="inputname" placeholder="">
           </div>

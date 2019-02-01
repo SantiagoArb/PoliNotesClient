@@ -1,106 +1,116 @@
 <div class="main-container">
-<form #forma="ngForm" (ngSubmit)="guardar( forma)">
-  <div class="form-group row">
-   <label class="col-1 col-form-label">Nombre</label>
-   <div class="col-8">
-      <input class="form-control" type="text" placeholder="Nombre" [(ngModel)]="usuario.nombre_user" name="nombre" required minlength="5" #nombre="ngModel" [ngClass]="{'is-invalid':nombre.errors!=null && nombre.touched, 'is-valid':nombre.errors==null}">
-       <div class="invalid-feedback ">
+  <form #forma="ngForm" (ngSubmit)="guardar( forma)">
+    <div *ngIf="validateError" class="alert alert-danger" role="alert">
+      {{mensaje}}
+    </div>
+    <div class="form-group row" style="margin-left: 20px;">
+      <label class="col-1 col-form-label">Nombre</label>
+      <div class="col-6">
+        <input class="form-control" type="text" placeholder="Nombre" [(ngModel)]="usuario.nombre_user" name="nombre" required  #nombre="ngModel" [ngClass]="{'is-invalid':nombre.errors!=null && nombre.touched, 'is-valid':nombre.errors==null}">
+        <div class="invalid-feedback ">
           <div *ngIf="nombre?.errors?.required ">
-              Este campo es requerido
+            Este campo es requerido
           </div>
-          <div *ngIf="nombre?.errors?.minlength?.requiredLength ">
-              Por lo menos 5 caracteres
+
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row" style="margin-left: 20px;">
+      <label class="col-1 col-form-label">Apellido</label>
+      <div class="col-6">
+
+        <input class="form-control" type="text" placeholder="Apellido" [(ngModel)]="usuario.apellidos_user" name="apellido" required #apellido="ngModel" [ngClass]="{'is-invalid':apellido.errors!=null && apellido.touched, 'is-valid':apellido.errors==null}">
+
+        <div class="invalid-feedback ">
+          <div *ngIf="apellido?.errors?.required ">
+            Este campo es requerido
           </div>
-       </div>
-   </div>
-</div>
-
-<div class="form-group row">
- <label class="col-1 col-form-label">Apellido</label>
- <div class="col-8">
-    <input class="form-control" type="text" placeholder="Apellido" [(ngModel)]="usuario.apellidos_user" name="apellido" required #apellido="ngModel" [ngClass]="{'is-invalid':apellido.errors!=null && apellido.touched, 'is-valid':apellido.errors==null}">
-     <div class="invalid-feedback ">
-        <div *ngIf="apellido?.errors?.required ">
-            Este campo es requerido
         </div>
-     </div>
- </div>
-</div>
+      </div>
+    </div>
 
 
-<div class="form-group row">
- <label class="col-1 col-form-label">Documento</label>
- <div class="col-8">
-    <input class="form-control" type="text" placeholder="Documento" [(ngModel)]="usuario.doc_user" name="documento" required #documento="ngModel" [ngClass]="{'is-invalid':documento.errors!=null && documento.touched, 'is-valid':documento.errors==null}">
-     <div class="invalid-feedback ">
-        <div *ngIf="documento?.errors?.required ">
+    <div class="form-group row" style="margin-left: 20px;">
+      <label class="col-1 col-form-label">Documento</label>
+      <div class="col-6">
+
+        <input (change)="onChange(documento)" class="form-control" type="text" placeholder="Documento" [(ngModel)]="usuario.doc_user" name="documento" required #documento="ngModel" [ngClass]="{'is-invalid':(documento.errors!=null && documento.touched) || doc, 'is-valid':documento.errors==null}">
+
+        <div class="invalid-feedback ">
+          <div *ngIf="documento?.errors?.required ">
             Este campo es requerido
-        </div>
-     </div>
- </div>
-</div>
+          </div>
 
-<div class="form-group row">
- <label class="col-1 col-form-label">Nombre de Usuario</label>
- <div class="col-8">
-    <input class="form-control" type="text" placeholder="Usuario" [(ngModel)]="usuario.nick_user" name="user" required #user="ngModel" [ngClass]="{'is-invalid':user.errors!=null && user.touched, 'is-valid':user.errors==null}">
-     <div class="invalid-feedback ">
-        <div *ngIf="user?.errors?.required ">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row" style="margin-left: 20px;">
+      <label class="col-1 col-form-label">Usuario/nick</label>
+      <div class="col-6">
+        <input (change)="onChange(user)" class="form-control" type="text" placeholder="Usuario" [(ngModel)]="usuario.nick_user" name="user" required #user="ngModel" [ngClass]="{'is-invalid':(user.errors!=null && user.touched) || nickname, 'is-valid':user.errors==null}">
+        <div class="invalid-feedback ">
+          <div *ngIf="user?.errors?.required ">
             Este campo es requerido
-        </div>
-     </div>
- </div>
-</div>
+          </div>
 
-<div class="form-group row">
- <label class="col-1 col-form-label">Contraseña</label>
- <div class="col-8">
-    <input class="form-control" type="text" placeholder="Contraseña" [(ngModel)]="usuario.password_user" name="pass" required #pass="ngModel" [ngClass]="{'is-invalid':pass.errors!=null && pass.touched, 'is-valid':pass.errors==null}">
-     <div class="invalid-feedback ">
-        <div *ngIf="pass?.errors?.required ">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row" style="margin-left: 20px;">
+      <label class="col-1 col-form-label">Contraseña</label>
+      <div class="col-6">
+        <input class="form-control" type="text" placeholder="Contraseña" [(ngModel)]="usuario.password_user" name="pass" required #pass="ngModel" [ngClass]="{'is-invalid':pass.errors!=null && pass.touched, 'is-valid':pass.errors==null}">
+        <div class="invalid-feedback ">
+          <div *ngIf="pass?.errors?.required ">
             Este campo es requerido
+          </div>
         </div>
-     </div>
- </div>
-</div>
+      </div>
+    </div>
 
 
-<div class="form-group row">
- <label class="col-1 col-form-label">Celular</label>
- <div class="col-8">
-    <input class="form-control" type="text" placeholder="Celular" [(ngModel)]="usuario.celular_user" name="cel" required #cel="ngModel" [ngClass]="{'is-invalid':cel.errors!=null && cel.touched, 'is-valid':cel.errors==null}">
-     <div class="invalid-feedback ">
-        <div *ngIf="cel?.errors?.required ">
+    <div class="form-group row" style="margin-left: 20px;">
+      <label class="col-1 col-form-label">Celular</label>
+      <div class="col-6">
+        <input class="form-control" type="text" placeholder="Celular" [(ngModel)]="usuario.celular_user" name="cel" required #cel="ngModel" [ngClass]="{'is-invalid':cel.errors!=null && cel.touched, 'is-valid':cel.errors==null}">
+        <div class="invalid-feedback ">
+          <div *ngIf="cel?.errors?.required ">
             Este campo es requerido
+          </div>
         </div>
-     </div>
- </div>
-</div>
+      </div>
+    </div>
 
-<div class="form-group row">
- <label class="col-1 col-form-label">Correo</label>
- <div class="col-8">
-    <input class="form-control" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" type="text" placeholder="Email" [(ngModel)]="usuario.correo_user" name="email" required #email="ngModel" [ngClass]="{'is-invalid':email.errors!=null && email.touched, 'is-valid':email.errors==null}">
-     <div class="invalid-feedback ">
-        <div *ngIf="email?.errors?.required">
+    <div class="form-group row" style="margin-left: 20px;">
+      <label class="col-1 col-form-label">Correo</label>
+      <div class="col-6">
+        <input (change)="onChange(email)" class="form-control" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" type="text" placeholder="Email" [(ngModel)]="usuario.correo_user" name="email" required #email="ngModel" [ngClass]="{'is-invalid':(email.errors!=null && email.touched) || mail, 'is-valid':email.errors==null}">
+        <div class="invalid-feedback ">
+          <div *ngIf="email?.errors?.required">
             Este campo es requerido
-        </div>
-        <div *ngIf="email?.errors?.pattern">
+          </div>
+          <div *ngIf="email?.errors?.pattern">
             Formato de correo invalido
+          </div>
+
         </div>
-     </div>
- </div>
-</div>
+      </div>
+    </div>
 
 
-
-  <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">Guardar</button>
-</form>
-<br>
-<div *ngIf="registro === 'error'" class="alert alert-danger" role="alert">
-Ocurrio un error con el Registro.
-</div>
-<div *ngIf="registro === 'ok'" class="alert alert-success" role="alert">
-Usuario registrado exitosamente...Redireccionando...
-</div>
+    <i *ngIf="load" class="fas fa-sync-alt fa-spin" style="margin-left:160px;"></i>
+    <i *ngIf="!load" class="fas fa-sync-alt" style="margin-left:160px;"></i>
+    <button [disabled]="!forma.valid || validateError" style="margin-left:10px;" type="submit" class="btn btn-outline-primary">Guardar</button>
+    <button (click)="limpiar(forma)" style="margin-left:10px;" class="btn btn-outline-secondary" type="button" name="button">Limpiar</button>
+  </form>
+  <br>
+  <div *ngIf="registro === 'error'" class="alert alert-danger" role="alert">
+    Ocurrio un error con el Registro.
+  </div>
+  <div *ngIf="registro === 'ok'" class="alert alert-success" role="alert">
+    Usuario registrado exitosamente...Redireccionando...
+  </div>
 </div>
