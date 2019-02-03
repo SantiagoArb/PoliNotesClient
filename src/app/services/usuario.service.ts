@@ -9,12 +9,13 @@ import { Router } from '@angular/router';
 })
 export class UsuarioService {
 perfil:Usuario;
+port:number = 8090;
   constructor(private _http:HttpClient,
               private route:Router) { }
 
   Loggear(user:Usuario){
      let usuarioJson = JSON.stringify(user);
-     return this._http.post("http://localhost:8080/login", usuarioJson).pipe( map(data => data));
+     return this._http.post(`http://localhost:${this.port}/login`, usuarioJson).pipe( map(data => data));
    }
 
    LogOut(){
@@ -29,27 +30,27 @@ perfil:Usuario;
    Registrar(user:Usuario){
      let usuarioJson = JSON.stringify(user);
      console.log(usuarioJson);
-     return this._http.post("http://localhost:8080/registro", usuarioJson).pipe( map(data => data));
+     return this._http.post(`http://localhost:${this.port}/registro`, usuarioJson).pipe( map(data => data));
    }
 
    actualizar(user:Usuario){
      let usuarioJson = JSON.stringify(user);
      console.log(user);
-      return this._http.post("http://localhost:8080/update", usuarioJson).pipe( map(data => data));
+      return this._http.post(`http://localhost:${this.port}/update`, usuarioJson).pipe( map(data => data));
    }
 
    getInfoUser(user:string){
 
-     return this._http.post("http://localhost:8080/getinfouser", user).pipe( map(data => data));
+     return this._http.post(`http://localhost:${this.port}/getinfouser`, user).pipe( map(data => data));
    }
 
    getAllUsers(){
-     return this._http.get("http://localhost:8080/allusers").pipe( map(data => data));
+     return this._http.get(`http://localhost:${this.port}/allusers`).pipe( map(data => data));
    }
 
    deleteUser(user:Usuario){
      let usuarioJson = JSON.stringify(user);
-     return this._http.post("http://localhost:8080/deleteuser",usuarioJson).pipe( map(data => data));
+     return this._http.post(`http://localhost:${this.port}/deleteuser`,usuarioJson).pipe( map(data => data));
    }
 
    validarRegistro(key:string,user:string){
@@ -59,6 +60,6 @@ perfil:Usuario;
    Params = Params.append('key', key);
    Params = Params.append('valor', user);
      let usuarioJson = JSON.stringify(user);
-     return this._http.get("http://localhost:8080/validate",{ params:Params }).pipe( map(data => data));
+     return this._http.get(`http://localhost:${this.port}/validate`,{ params:Params }).pipe( map(data => data));
    }
 }
