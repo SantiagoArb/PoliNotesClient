@@ -1,0 +1,123 @@
+<header>
+  <div class="row">
+    <app-navbar></app-navbar>
+  </div>
+</header>
+<div class="row">
+  <div class="col-2">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="col-10 div-content">
+
+    <div class=" animated fadeIn fast content">
+
+      <ul class="nav">
+        <li (click)="cargarEstudiantes(materia)" #mat *ngFor="let materia of materias" style="margin-left:0.2%;">
+          <h5><span   class="badge badge-primary">{{materia.nombre_MATERIA}}</span></h5>
+        </li>
+      </ul>
+      <button (click)="openForm()" class="btn btn-outline-primary" type="button" name="button">Agregar Materia</button>
+      <button *ngIf="matSelected" style="margin-left:1%;" (click)="openFormEst()" class="btn btn-outline-primary" type="button" name="button">Agregar Estudiante</button>
+
+      <form *ngIf="newEst" #forma="ngForm" (ngSubmit)="guardarEstudiante(forma)">
+        <br>
+        <div class="form-row">
+          <div class="form-group col-3">
+            <label for="inputname">Documento</label>
+            <input [(ngModel)]="materia.doc_estudiante" name="documento" required #documento="ngModel" type="text" class="form-control" id="inputname" placeholder="">
+          </div>
+        </div>
+
+
+        <div class="form-row">
+          <div class="form-group col-3">
+            <label for="inputname">Nombre Completo</label>
+            <input [(ngModel)]="materia.nom_estudiante" name="nombre" required #nombre="ngModel" type="text" class="form-control" id="inputname" placeholder="">
+          </div>
+
+        </div>
+
+
+        <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">Guardar</button>
+      </form>
+
+
+
+      <form *ngIf="newMat" #forma="ngForm" (ngSubmit)="guardar(forma)">
+        <br>
+        <div class="form-row">
+          <div class="form-group col-3">
+            <label for="inputname">Codigo</label>
+            <input [(ngModel)]="materia.codigo_materia" name="codigo" required #codigo="ngModel" type="text" class="form-control" id="inputname" placeholder="">
+          </div>
+        </div>
+
+
+        <div class="form-row">
+          <div class="form-group col-3">
+            <label for="inputname">Nombre</label>
+            <input [(ngModel)]="materia.nombre_materia" name="nombre" required #nombre="ngModel" type="text" class="form-control" id="inputname" placeholder="">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="inputlastname">Facultad</label>
+            <input [(ngModel)]="materia.facultad_materia" name="facultad" required #facultad="ngModel" type="text" id="inputlastname" class="form-control" placeholder="">
+          </div>
+        </div>
+
+
+        <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">Guardar</button>
+      </form>
+      <br>
+      <br>
+      <div *ngIf="estado === false" class="alert alert-danger" role="alert">
+        Ocurrio un error con la ejecucion de la accion.
+      </div>
+      <div *ngIf="estado === true" class="alert alert-success" role="alert">
+        Accion aplicada exitosamente!
+      </div>
+    </div>
+
+    <div class="  table-responsive-md">
+      <table class="table table-hover table-borderless table-light">
+        <thead>
+          <tr class="bg-primary">
+            <th scope="col">#</th>
+            <th scope="col">Documento</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Materia</th>
+            <th scope="col">Nota 1</th>
+            <th scope="col">Nota 2</th>
+            <th scope="col">Nota 3</th>
+            <th scope="col">Nota 4</th>
+            <th scope="col">Nota 5</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let est of estudiantes; index as i ">
+            <th scope="row">{{i + 1 }}</th>
+            <td>{{est.doc_estudiante}}</td>
+            <td>{{est.nom_estudiante}}</td>
+            <td>{{matSelected.nombre_MATERIA}}</td>
+            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
+            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
+            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
+            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
+            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
+            <td>
+              <button (click)="editarNotas(est)" type="button" class="btn btn-outline-primary" name="button"><i class="far fa-edit"></i></button>
+              <button (click)="eliminarEst(est)" type="button" style="margin-left:5px;" class="btn btn-outline-danger" name="button"><i class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <app-footer></app-footer>
+</footer>

@@ -21,28 +21,32 @@ export class RegistroComponent implements OnInit {
     celular_user: null,
     correo_user: null,
     id_perfil_user: null,
-    estado_user: null,
+    estado_user: null
   };
   constructor(private _us: UsuarioService,
     private root: Router) { }
   registro: string = "";
-  nickname:boolean;
-  mail:boolean;
-  doc:boolean;
-  load:boolean;
-  validateError:boolean;
-  mensaje:string;
+  nickname: boolean;
+  mail: boolean;
+  doc: boolean;
+  load: boolean = false;
+  validateError: boolean;
+  mensaje: string;
+  confirmError = null;
+  mailError = null;
+  nickError = null;
+  docError = null;
 
   ngOnInit() {
   }
 
   guardar(forma: NgForm) {
     this.nickname = false;
-    this.mail=false;
+    this.mail = false;
     this.doc = false;
-    this.validateError=false;
-    this.load=false;
-    this.mensaje=null;
+    this.validateError = false;
+    this.load = false;
+    this.mensaje = null;
     let user: Usuario = new Usuario();
     user.setNick_user(forma.value.user);
     user.setDoc_user(forma.value.documento);
@@ -69,50 +73,77 @@ export class RegistroComponent implements OnInit {
 
   limpiar(formulario: NgForm) {
     formulario.reset();
+    this.mensaje = "";
+    this.confirmError = false;
   }
 
   onChange(usuario: any) {
+    this.confirmError = false;
+    this.load = true;
     if (usuario.value !== "") {
-      this.load = true;
+
       if (usuario.name === "user") {
 
-        this._us.validarRegistro("ValidarNick", usuario.value).subscribe(data =>{
+        this._us.validarRegistro("ValidarNick", usuario.value).subscribe(data => {
           this.validateError = <boolean>data;
-          if(this.validateError){
-            this.mensaje="Este nombre de usuario no se encuentra disponible.";
+          if (this.validateError) {
+            this.mensaje = "Este nombre de usuario no se encuentra disponible.";
             this.nickname = true;
-          }else{
+          } else {
             this.nickname = false;
           }
 
         });
       } else if (usuario.name === "documento") {
-        this._us.validarRegistro("ValidarDoc", usuario.value).subscribe(data =>{
+        this._us.validarRegistro("ValidarDoc", usuario.value).subscribe(data => {
           this.validateError = <boolean>data;
-          if(this.validateError){
-            this.mensaje="Este documento ya se encuentra registrado.";
+          if (this.validateError) {
+            this.mensaje = "Este documento ya se encuentra registrado.";
             this.doc = true;
-          }else{
+          } else {
             this.doc = false;
           }
 
         });
       } else if (usuario.name === "email") {
-        this._us.validarRegistro("ValidarEmail", usuario.value).subscribe(data =>{
+        this._us.validarRegistro("ValidarEmail", usuario.value).subscribe(data => {
           this.validateError = <boolean>data;
-          if(  this.validateError){
+          if (this.validateError) {
             this.mensaje = "Este correo ya se encuentra registrado.";
             this.mail = true;
-          }else{
-            this.mail=false;
+          } else {
+            this.mail = false;
           }
 
         });
       }
-      setTimeout(function(){},3000);
-      this.load = false;
+
     }
 
-  }
+     new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+       if(this.validateError){
+         if(this.mail){
+           this.mailError = true;
+         }else{
+           this.mailError = false;
+         }
+         if(this.doc){
+           this.docError = true;
+         }else{
+           this.docError = false;
+         }
+         if(this.nickname){
+           this.nickError = true;
+         }else{
+           this.nickError = false;
+         }
+         this.confirmError = true;
+       }
+       this.load=false
+     });
+   }
+
+
+
 
 }

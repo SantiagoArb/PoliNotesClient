@@ -15,6 +15,7 @@ import { SidebarComponent } from './components/util/sidebar/sidebar.component';
 import { FooterComponent } from './components/util/footer/footer.component';
 import { RegistroComponent } from './components/usuario/registro/registro.component';
 import { UsuariosComponent } from './components/usuario/usuarios/usuarios.component';
+import { AsignaturasComponent } from './components/maestros/asignaturas/asignaturas.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UsuariosComponent } from './components/usuario/usuarios/usuarios.compon
     SidebarComponent,
     FooterComponent,
     RegistroComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    AsignaturasComponent
   ],
   imports: [
     BrowserModule,
