@@ -23,8 +23,14 @@ export class RegistroComponent implements OnInit {
     id_perfil_user: null,
     estado_user: null
   };
+  perfiles:any=[];
   constructor(private _us: UsuarioService,
-    private root: Router) { }
+    private root: Router) {
+      this._us.getPerfiles().subscribe(data=>{
+        this.perfiles = data;
+        console.log(this.perfiles);
+      })
+    }
   registro: string = "";
   nickname: boolean;
   mail: boolean;
@@ -55,7 +61,8 @@ export class RegistroComponent implements OnInit {
     user.setCelular_user(forma.value.cel);
     user.setCorreo_user(forma.value.email);
     user.setPassword_user(forma.value.pass);
-
+    user.setId_perfil_user(forma.value.perfil);
+    console.log(user);
     this._us.Registrar(user).subscribe(data => {
       if (data) {
         let ruta = this.root;

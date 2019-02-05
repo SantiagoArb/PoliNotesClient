@@ -17,6 +17,8 @@ import { RegistroComponent } from './components/usuario/registro/registro.compon
 import { UsuariosComponent } from './components/usuario/usuarios/usuarios.component';
 import { AsignaturasComponent } from './components/maestros/asignaturas/asignaturas.component';
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +37,8 @@ import { AsignaturasComponent } from './components/maestros/asignaturas/asignatu
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

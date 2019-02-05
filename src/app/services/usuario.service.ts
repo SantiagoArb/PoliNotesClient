@@ -62,4 +62,8 @@ port:number = 8080;
    Params = Params.append('valor', user);
      return this._http.get(`http://localhost:${PUERTO}/validate`,{ params:Params }).pipe( map(data => data));
    }
+
+   getPerfiles(){
+     return this._http.get(`http://localhost:${PUERTO}/allperfil`).pipe(map(data => data));
+   }
 }

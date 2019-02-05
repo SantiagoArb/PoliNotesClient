@@ -6,7 +6,7 @@
     <div class="form-group row" style="margin-left: 20px;">
       <label class="col-1 col-form-label">Nombre</label>
       <div class="col-6">
-        <input class="form-control" type="text" placeholder="Nombre" [(ngModel)]="usuario.nombre_user" name="nombre" required  #nombre="ngModel" [ngClass]="{'is-invalid':nombre.errors!=null && nombre.touched, 'is-valid':nombre.errors==null}">
+        <input class="form-control" type="text" placeholder="Nombre" [(ngModel)]="usuario.nombre_user" name="nombre" required #nombre="ngModel" [ngClass]="{'is-invalid':nombre.errors!=null && nombre.touched, 'is-valid':nombre.errors==null}">
         <div class="invalid-feedback ">
           <div *ngIf="nombre?.errors?.required ">
             Este campo es requerido
@@ -87,7 +87,7 @@
     <div class="form-group row" style="margin-left: 20px;">
       <label class="col-1 col-form-label">Correo</label>
       <div class="col-6">
-        <input  (change)="onChange(email)" class="form-control" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" type="text" placeholder="Email" [(ngModel)]="usuario.correo_user" name="email" required #email="ngModel" [ngClass]="{'is-invalid':(email.errors!=null && email.touched) || mailError, 'is-valid':email.errors==null}">
+        <input (change)="onChange(email)" class="form-control" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" type="text" placeholder="Email" [(ngModel)]="usuario.correo_user" name="email" required #email="ngModel" [ngClass]="{'is-invalid':(email.errors!=null && email.touched) || mailError, 'is-valid':email.errors==null}">
         <div class="invalid-feedback">
           <div *ngIf="email?.errors?.required">
             Este campo es requerido
@@ -100,7 +100,14 @@
       </div>
     </div>
 
-
+    <div class="form-group row" style="margin-left: 20px;">
+      <label class="col-3 col-form-label">Perfil</label>
+      <div class="col-6">
+        <select [(ngModel)]="perfiles.nombre_TIPO_PERFIL" name="perfil" required #facultad="ngModel" class="custom-select">
+          <option *ngFor="let perfil of perfiles" [value]="perfil.id_TIPO_PERFIL">{{perfil.nombre_TIPO_PERFIL}}</option>
+        </select>
+      </div>
+    </div>
 
     <i *ngIf="load" class="fa-spin fas fa-sync-alt" style="margin-left:160px;"></i>
     <i *ngIf="!load" class="fas fa-sync-alt" style="margin-left:160px;"></i>

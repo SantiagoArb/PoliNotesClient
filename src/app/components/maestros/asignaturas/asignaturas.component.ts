@@ -5,6 +5,7 @@ import { MateriaService } from 'src/app/services/materia.service';
 import { Materia } from 'src/app/clases/materia.clase';
 import { Router } from '@angular/router';
 import { materia_est } from 'src/app/clases/materia_est.clase';
+import { FacultadService } from 'src/app/services/facultad.service';
 
 @Component({
   selector: 'app-asignaturas',
@@ -30,12 +31,20 @@ export class AsignaturasComponent implements OnInit {
   matSelected: any = [];
   estudiantes: any[];
   flagEditar:boolean;
+  facultades:any=[];
   constructor(private _ms: MateriaService,
-    private router: Router) {
+              private router: Router,
+              private _fs:FacultadService) {
       this.flagEditar = true;
     this.matSelected = null;
     this.newMat = false;
     this.newEst = false;
+
+    this._fs.getFacultades().subscribe(data=>{
+      this.facultades = data;
+      console.log(data);
+    })
+
     if (!localStorage.getItem('LocalSesion')) {
       this.router.navigate(['/login']);
     } else {
@@ -102,14 +111,16 @@ export class AsignaturasComponent implements OnInit {
   }
 
   cargarEstudiantes(mat: any) {
-    this.matSelected = mat
-    this._ms.getEstudianteMateria(this.matSelected.id_MATERIA).subscribe(data => {
-      this.estudiantes = <any>data;
 
-      console.log(data);
-    });
-    console.log(this.matSelected);
-  }
+      this.matSelected = mat
+      this._ms.getEstudianteMateria(this.matSelected.id_MATERIA).subscribe(data => {
+        this.estudiantes = <any>data;
+
+        console.log(data);
+      });
+      console.log(this.matSelected);
+
+}
 
   guardarEstudiante(formulario: NgForm) {
     let obj = new materia_est();
@@ -117,11 +128,11 @@ export class AsignaturasComponent implements OnInit {
     obj.setNom_estudiante(formulario.value.nombre);
     obj.setId_materia(this.matSelected.id_MATERIA);
     this._ms.guardarEstudianteMateria(obj).subscribe(data => {
-      console.log(data);
       this.estado = <boolean>data;
       new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
         this.cargarEstudiantes(this.matSelected);
         this.newEst = false;
+        this.estado = null;
       });
 
     })
@@ -132,12 +143,29 @@ export class AsignaturasComponent implements OnInit {
 
     this._ms.deleteEstudianteMateria(est.id_materia,est.doc_estudiante).subscribe(data=>{
       this.estado = <boolean>data;
-      setTimeout(function() {
-
-        window.location.reload();
-      }, 3000);
+      this.estado = <boolean>data;
+      new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+        this.cargarEstudiantes(this.matSelected);
+        this.estado = null;
+      });
     })
     console.log(est);
+  }
+
+  eliminarMat(mat:any){
+    if(this.matSelected){
+      this._ms.deleteMateria(this.matSelected.id_MATERIA).subscribe(data =>{
+        this.estado = <boolean>data;
+        new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+          this.cargarMaterias();
+          this.newMat = false;
+          this.newEst = false;
+          this.estado = null;
+          this.matSelected=null;
+        });
+      });
+    }
+
   }
 
 }

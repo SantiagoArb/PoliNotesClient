@@ -13,6 +13,7 @@
     </div>
     <div class="col-10 div-content">
       <div class=" animated fadeIn fast content">
+        <div class="container">
         <form #forma="ngForm" (ngSubmit)="actualizar(forma)">
         <br>
         <div class="form-row">
@@ -52,6 +53,7 @@
         </div>
         <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">Actualizar</button>
       </form>
+      </div>
       <br>
       <br>
       <div *ngIf="estado === 'error'" class="alert alert-danger" role="alert">

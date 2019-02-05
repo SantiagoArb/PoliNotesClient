@@ -14,11 +14,13 @@
 
       <ul class="nav">
         <li (click)="cargarEstudiantes(materia)" #mat *ngFor="let materia of materias" style="margin-left:0.2%;">
-          <h5><span   class="badge badge-primary">{{materia.nombre_MATERIA}}</span></h5>
+          <h5><span class="badge badge-primary">{{materia.nombre_MATERIA}}</span></h5>
         </li>
       </ul>
       <button (click)="openForm()" class="btn btn-outline-primary" type="button" name="button">Agregar Materia</button>
       <button *ngIf="matSelected" style="margin-left:1%;" (click)="openFormEst()" class="btn btn-outline-primary" type="button" name="button">Agregar Estudiante</button>
+      <button *ngIf="matSelected" type="button" style="margin-left:1%;" (click)="eliminarMat()" class="btn btn-outline-danger" name="button">Eliminar Materia</button>
+
 
       <form *ngIf="newEst" #forma="ngForm" (ngSubmit)="guardarEstudiante(forma)">
         <br>
@@ -61,7 +63,10 @@
           </div>
           <div class="form-group col-md-3">
             <label for="inputlastname">Facultad</label>
-            <input [(ngModel)]="materia.facultad_materia" name="facultad" required #facultad="ngModel" type="text" id="inputlastname" class="form-control" placeholder="">
+            <select [(ngModel)]="materia.facultad_materia" name="facultad" required #facultad="ngModel" class="custom-select">
+              <option *ngFor="let fac of facultades" [value]="fac.id_FACULTAD">{{fac.nombre_FACULTAD}}</option>
+            </select>
+
           </div>
         </div>
 
@@ -77,11 +82,15 @@
         Accion aplicada exitosamente!
       </div>
     </div>
+    <div *ngIf="matSelected" class="row" style="margin-left:1%;">
+      <h3><span class="badge badge-info">Codigo: </span> {{matSelected.codigo_MATERIA}}&nbsp;</h3>
+      <h3> <span class="badge badge-info"> Nombre: </span> {{matSelected.nombre_MATERIA}} </h3>
+    </div>
 
-    <div class="  table-responsive-md">
+    <div class="table-responsive-md">
       <table class="table table-hover table-borderless table-light">
         <thead>
-          <tr class="bg-primary">
+          <tr class="bg-info">
             <th scope="col">#</th>
             <th scope="col">Documento</th>
             <th scope="col">Nombre</th>

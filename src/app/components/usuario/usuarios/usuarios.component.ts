@@ -74,15 +74,19 @@ export class UsuariosComponent implements OnInit {
       }else{
         this.estado = false;
       }
-      setTimeout(function(){
-        window.location.reload();
-      },3000);
+      new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+        this.getAllUsers();
+        this.estado = null;
+        this.userEdit = null;
+      });
+
+
     });
 
   }
 
   cancelarEdit(){
     this.userEdit = null;
-    window.location.reload();
+    this.getAllUsers();
   }
 }
