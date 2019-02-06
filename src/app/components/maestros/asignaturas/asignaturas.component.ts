@@ -32,6 +32,7 @@ export class AsignaturasComponent implements OnInit {
   estudiantes: any[];
   flagEditar:boolean;
   facultades:any=[];
+  facultadSelected:any;
   constructor(private _ms: MateriaService,
               private router: Router,
               private _fs:FacultadService) {
@@ -58,7 +59,7 @@ export class AsignaturasComponent implements OnInit {
 
   cargarMaterias(){
     this.perfil = JSON.parse(localStorage.getItem("LocalSesion"));
-    this._ms.getMaterias(this.perfil.id_PERFIL_USER).subscribe(data => {
+    this._ms.getMaterias(this.perfil.id_USUARIO).subscribe(data => {
       this.materias = data;
     })
   }
@@ -96,12 +97,14 @@ export class AsignaturasComponent implements OnInit {
     mat.setID_MATERIA("1");
     mat.setCODIGO_MATERIA(formulario.value.codigo);
     mat.setNOMBRE_MATERIA(formulario.value.nombre);
-    mat.setFACULTAD_MATERIA(formulario.value.formulario);
-    mat.setID_MAESTRO(this.perfil.id_PERFIL_USER);
+    mat.setFACULTAD_MATERIA(this.facultadSelected);
+    mat.setID_MAESTRO(this.perfil.id_USUARIO);
+
     this._ms.guardarMAteria(mat).subscribe(data => {
       this.estado = <boolean>data;
       new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
         this.cargarMaterias();
+        formulario.reset();
         this.newMat = false;
         this.estado = null;
       });
@@ -120,6 +123,10 @@ export class AsignaturasComponent implements OnInit {
       });
       console.log(this.matSelected);
 
+}
+
+guardarRow(est:any){
+  console.log(est);
 }
 
   guardarEstudiante(formulario: NgForm) {

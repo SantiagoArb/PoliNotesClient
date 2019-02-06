@@ -66,4 +66,12 @@ port:number = 8080;
    getPerfiles(){
      return this._http.get(`http://localhost:${PUERTO}/allperfil`).pipe(map(data => data));
    }
+
+   getMisMaterias(key:string){
+     let Params = new HttpParams();
+
+   // Begin assigning parameters
+   Params = Params.append('doc', key);
+     return this._http.get(`http://localhost:${PUERTO}/mymats`,{ params:Params }).pipe( map(data => data));
+   }
 }

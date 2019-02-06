@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RegistroComponent } from './components/usuario/registro/registro.component';
 import { UsuariosComponent } from './components/usuario/usuarios/usuarios.component';
 import { AsignaturasComponent } from './components/maestros/asignaturas/asignaturas.component';
+import { EstudianteComponent } from './components/usuario/estudiante/estudiante.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'users', component: UsuariosComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'materias', component: AsignaturasComponent },
+  { path: 'mismaterias', component: EstudianteComponent },
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];

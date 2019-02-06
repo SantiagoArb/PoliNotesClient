@@ -1,0 +1,31 @@
+<header>
+  <div class="row">
+    <app-navbar></app-navbar>
+  </div>
+</header>
+<div class="row">
+  <div class="col-2">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="col-10 div-content">
+
+    <div class=" animated fadeIn fast content">
+
+      <ul class="nav">
+        <li (click)="cargarEstudiantes(materia)" #mat *ngFor="let materia of materias" style="margin-left:0.2%;">
+          <h5><span class="badge badge-dark main-color" >{{materia.nombre_MATERIA}}</span></h5>
+        </li>
+      </ul>
+
+      <div *ngIf="matSelected" class="row" style="margin-left:0.2%;">
+        <h3><span class="badge badge-dark main-color">Codigo: </span> {{matSelected.codigo_MATERIA}}&nbsp;</h3>
+        <h3> <span class="badge badge-dark main-color"> Nombre: </span> {{matSelected.nombre_MATERIA}} </h3>
+      </div>
+
+  </div>
+</div>
+
+<footer>
+  <app-footer></app-footer>
+</footer>

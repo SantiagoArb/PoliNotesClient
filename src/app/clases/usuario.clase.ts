@@ -2,7 +2,7 @@
 
 export class Usuario{
 
-    private  ID_USER:Number;
+    private ID_USER:Number;
     private DOC_USER:String;
     private NICK_USER:String;
     private PASSWORD_USER:String;

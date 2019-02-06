@@ -18,6 +18,7 @@ import { UsuariosComponent } from './components/usuario/usuarios/usuarios.compon
 import { AsignaturasComponent } from './components/maestros/asignaturas/asignaturas.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { EstudianteComponent } from './components/usuario/estudiante/estudiante.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FooterComponent,
     RegistroComponent,
     UsuariosComponent,
-    AsignaturasComponent
+    AsignaturasComponent,
+    EstudianteComponent
   ],
   imports: [
     BrowserModule,

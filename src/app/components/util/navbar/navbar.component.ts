@@ -10,7 +10,6 @@ export class NavbarComponent implements OnInit {
 sesionActual:any;
   constructor(private _us:UsuarioService) {
       this.sesionActual = this._us.getSesionActual();
-      console.log(this.sesionActual);
    }
 
   ngOnInit() {
