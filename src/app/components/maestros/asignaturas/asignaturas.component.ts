@@ -6,6 +6,8 @@ import { Materia } from 'src/app/clases/materia.clase';
 import { Router } from '@angular/router';
 import { materia_est } from 'src/app/clases/materia_est.clase';
 import { FacultadService } from 'src/app/services/facultad.service';
+import { IConcertacion } from 'src/app/Interfaces/concertacion.interface';
+import { Concertacion } from 'src/app/clases/concertacion.clase';
 
 @Component({
   selector: 'app-asignaturas',
@@ -33,6 +35,15 @@ export class AsignaturasComponent implements OnInit {
   flagEditar:boolean;
   facultades:any=[];
   facultadSelected:any;
+  estadoCon:boolean;
+  ConcertSelect:any=[];
+  concertacion:IConcertacion={
+    id_concertacion:null,
+    nom_concertacion:null,
+    porcentaje:null,
+    doc_maestro:null,
+    id_materia:null
+  };
   constructor(private _ms: MateriaService,
               private router: Router,
               private _fs:FacultadService) {
@@ -60,6 +71,7 @@ export class AsignaturasComponent implements OnInit {
   cargarMaterias(){
     this.perfil = JSON.parse(localStorage.getItem("LocalSesion"));
     this._ms.getMaterias(this.perfil.id_USUARIO).subscribe(data => {
+      console.log(data);
       this.materias = data;
     })
   }
@@ -116,10 +128,13 @@ export class AsignaturasComponent implements OnInit {
   cargarEstudiantes(mat: any) {
 
       this.matSelected = mat
+      this._ms.getConcertacionMateria(this.matSelected.id_MATERIA).subscribe(data =>{
+        console.log("Concertacion: ",data);
+        this.ConcertSelect = data;
+      });
       this._ms.getEstudianteMateria(this.matSelected.id_MATERIA).subscribe(data => {
         this.estudiantes = <any>data;
 
-        console.log(data);
       });
       console.log(this.matSelected);
 
@@ -138,6 +153,7 @@ guardarRow(est:any){
       this.estado = <boolean>data;
       new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
         this.cargarEstudiantes(this.matSelected);
+        formulario.reset();
         this.newEst = false;
         this.estado = null;
       });
@@ -173,6 +189,28 @@ guardarRow(est:any){
       });
     }
 
+  }
+
+  setConcertacion(formulario:NgForm){
+    let con:Concertacion = new Concertacion();
+    con.setNom_concertacion(formulario.value.nombre);
+    con.setValor_porcentual(formulario.value.valor);
+    con.setId_materia(this.matSelected.id_MATERIA)
+    this.perfil = JSON.parse(localStorage.getItem("LocalSesion"));
+    con.setDoc_maestro(this.perfil.doc_USER);
+    con.setId_usuario(this.matSelected.id_MAESTRO);
+    console.log(con);
+    this._ms.guardarConcertacion(con).subscribe(data =>{
+      this.estadoCon = <boolean>data;
+      new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+        if(this.estadoCon){
+          formulario.reset();
+          window.location.reload();
+        }
+      });
+
+
+    });
   }
 
 }

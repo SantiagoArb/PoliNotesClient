@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { PUERTO } from '../clases/constantes';
 import { Materia } from '../clases/materia.clase';
 import { materia_est } from '../clases/materia_est.clase';
+import { Concertacion } from '../clases/concertacion.clase';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,19 @@ export class MateriaService {
     // Begin assigning parameters
     Params = Params.append('idx', idx);
     return this._http.get(`http://localhost:${PUERTO}/deletemat`, { params: Params }).pipe(map(data => data));
+  }
+
+  guardarConcertacion(con: Concertacion) {
+    let usuarioJson = JSON.stringify(con);
+    return this._http.post(`http://localhost:${PUERTO}/setconcer`, usuarioJson).pipe(map(data => data));
+  }
+
+  getConcertacionMateria(idx: string) {
+    let Params = new HttpParams();
+
+    // Begin assigning parameters
+    Params = Params.append('idx', idx);
+    return this._http.get(`http://localhost:${PUERTO}/getconcert`, { params: Params }).pipe(map(data => data));
+
   }
 }

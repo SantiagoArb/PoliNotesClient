@@ -86,21 +86,18 @@
     <div *ngIf="matSelected" class="row" style="margin-left:0.2%;">
       <h3><span class="badge badge-dark main-color">Codigo: </span> {{matSelected.codigo_MATERIA}}&nbsp;</h3>
       <h3> <span class="badge badge-dark main-color"> Nombre: </span> {{matSelected.nombre_MATERIA}} </h3>
+      <button *ngIf="matSelected" data-toggle="modal" data-target="#exampleModal" type="button" style="margin-left:1%; margin-bottom:1%;" class="btn btn-outline-primary" name="button">Añadir Nota</button>
     </div>
 
-    <div class="table-responsive-md">
+    <div *ngIf="matSelected" class="table-responsive-md">
       <table class="table table-striped table-hover table-info table-borderless">
         <thead class="thead-dark">
           <tr >
             <th scope="col">#</th>
             <th scope="col">Documento</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Materia</th>
-            <th scope="col">Nota 1</th>
-            <th scope="col">Nota 2</th>
-            <th scope="col">Nota 3</th>
-            <th scope="col">Nota 4</th>
-            <th scope="col">Nota 5</th>
+            <th *ngFor="let concertacion of ConcertSelect; let i = index" scope="col">{{concertacion.valor_porcentual}}% <br> ({{concertacion.nom_concertacion}})</th>
+
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -109,12 +106,7 @@
             <th scope="row">{{i + 1 }}</th>
             <td>{{est.doc_estudiante}}</td>
             <td>{{est.nom_estudiante}}</td>
-            <td>{{matSelected.nombre_MATERIA}}</td>
-            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
-            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
-            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
-            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
-            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
+            <td *ngFor="let concertacion of ConcertSelect" ><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
             <td>
               <button (click)="editarNotas(est)" type="button" class="btn btn-outline-primary" name="button"><i class="far fa-edit"></i></button>
               <button (click)="guardarRow(est)" type="button" style="margin-left:5px;" class="btn btn-outline-success" name="button"><i class="far fa-save"></i></button>
@@ -129,6 +121,50 @@
   </div>
 </div>
 
-<footer>
-  <app-footer></app-footer>
-</footer>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form #formaCon="ngForm" (ngSubmit)="setConcertacion(formaCon)">
+          <br>
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label for="inputname">Nombre Nota</label>
+              <input [(ngModel)]="concertacion.nom_concertacion" name="nombre" required #nombre="ngModel" type="text" class="form-control" id="inputname" placeholder="Taller, Quiz etc">
+            </div>
+          </div>
+
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label for="inputname">Valor Porcentual</label>
+              <input [(ngModel)]="concertacion.porcentaje" name="valor" required #valor="ngModel" type="text" class="form-control" id="inputname" placeholder="10, 20, 25 etc">
+            </div>
+
+          </div>
+
+
+          <button [disabled]="!formaCon.valid" type="submit" class="btn btn-outline-primary">Guardar</button>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <div *ngIf="estadoCon === false" class="alert alert-danger" role="alert">
+          Ocurrio un error con la ejecucion de la accion.
+        </div>
+        <div *ngIf="estadoCon === true" class="alert alert-success" role="alert">
+          Accion aplicada exitosamente!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
