@@ -36,11 +36,12 @@ export class MateriaService {
     return this._http.post(`http://localhost:${PUERTO}/estmat`, usuarioJson).pipe(map(data => data));
   }
 
-  getEstudianteMateria(idx: string) {
+  getEstudianteMateria(idx: string,id_con:string) {
     let Params = new HttpParams();
 
     // Begin assigning parameters
     Params = Params.append('idx', idx);
+    Params = Params.append('id_con', id_con);
     return this._http.get(`http://localhost:${PUERTO}/getestmat`, { params: Params }).pipe(map(data => data));
 
   }

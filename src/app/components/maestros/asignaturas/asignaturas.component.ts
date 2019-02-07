@@ -32,11 +32,12 @@ export class AsignaturasComponent implements OnInit {
   materias: any = [];
   matSelected: any = [];
   estudiantes: any[];
+  students:any=[];
   flagEditar:boolean;
   facultades:any=[];
   facultadSelected:any;
   estadoCon:boolean;
-  ConcertSelect:any=[];
+  ConcertSelect:any;
   concertacion:IConcertacion={
     id_concertacion:null,
     nom_concertacion:null,
@@ -128,15 +129,25 @@ export class AsignaturasComponent implements OnInit {
   cargarEstudiantes(mat: any) {
 
       this.matSelected = mat
-      this._ms.getConcertacionMateria(this.matSelected.id_MATERIA).subscribe(data =>{
-        console.log("Concertacion: ",data);
-        this.ConcertSelect = data;
-      });
-      this._ms.getEstudianteMateria(this.matSelected.id_MATERIA).subscribe(data => {
-        this.estudiantes = <any>data;
-
-      });
       console.log(this.matSelected);
+      this._ms.getConcertacionMateria(this.matSelected.id_MATERIA).subscribe(data =>{
+        this.ConcertSelect =<any> data;
+        console.log(data);
+      });
+
+      console.log(this.matSelected);
+
+}
+
+CargarNotas(select:any){
+  if(select.value.id_concertacion === null){
+
+  }else{
+    console.log(select);
+    this._ms.getEstudianteMateria(this.matSelected.id_MATERIA, select.value).subscribe(data => {
+      this.students =<any> data;
+    });
+  }
 
 }
 
