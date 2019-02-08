@@ -129,7 +129,7 @@ export class AsignaturasComponent implements OnInit {
   }
 
   cargarEstudiantes(mat: any) {
-
+      this.students =[];
       this.matSelected = mat
       console.log(this.matSelected);
       this._ms.getConcertacionMateria(this.matSelected.id_MATERIA).subscribe(data =>{

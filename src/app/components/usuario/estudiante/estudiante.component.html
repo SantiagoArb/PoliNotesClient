@@ -13,7 +13,7 @@
     <div class=" animated fadeIn fast content">
 
       <ul class="nav">
-        <li (click)="cargarEstudiantes(materia)" #mat *ngFor="let materia of materias" style="margin-left:0.2%;">
+        <li (click)="CargarNotas(materia)" #mat *ngFor="let materia of materias" style="margin-left:0.2%;">
           <h5><span class="badge badge-dark main-color" >{{materia.nombre_MATERIA}}</span></h5>
         </li>
       </ul>
@@ -21,6 +21,36 @@
       <div *ngIf="matSelected" class="row" style="margin-left:0.2%;">
         <h3><span class="badge badge-dark main-color">Codigo: </span> {{matSelected.codigo_MATERIA}}&nbsp;</h3>
         <h3> <span class="badge badge-dark main-color"> Nombre: </span> {{matSelected.nombre_MATERIA}} </h3>
+      </div>
+      <div *ngIf="ConcertSelect" class="table-responsive-md">
+        <table class="table table-striped table-hover table-info table-borderless">
+          <thead class="thead-dark">
+            <tr >
+              <th scope="col">Documento</th>
+              <th scope="col">Nombre</th>
+              <th *ngFor="let concertacion of ConcertSelect; let i = index" scope="col">{{concertacion.porcentaje}}% <br> ({{concertacion.nombre_conertacion}})</th>
+              <!--th>
+              <div *ngIf="ConcertSelect" class="container">
+                <select (click)="CargarNotas(SelectConcertacion)" [(ngModel)]="concertacion" name="SelectConcertacion" required #SelectConcertacion="ngModel" class="custom-select">
+                <option >Seleccione</option>
+                <option *ngFor="let concertacion of ConcertSelect" [value]="concertacion.id_concertacion">{{concertacion.nom_concertacion}} {{concertacion.valor_porcentual}}%</option>
+              </select>
+            </div>
+  </th-->
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{perfil.doc_USER}}</td>
+              <td>{{perfil.nombre_USER}}</td>
+              <td *ngFor="let concert of ConcertSelect;">{{concert.nota}}</td>
+
+
+            </tr>
+
+          </tbody>
+        </table>
       </div>
 
   </div>

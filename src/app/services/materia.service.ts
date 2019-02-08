@@ -79,4 +79,9 @@ export class MateriaService {
     let usuarioJson = JSON.stringify(nota);
     return this._http.post(`http://localhost:${PUERTO}/setnota`, usuarioJson).pipe(map(data => data));
   }
+
+  getMisNotas(datos){
+    let usuarioJson = JSON.stringify(datos);
+    return this._http.post(`http://localhost:${PUERTO}/getnotas`, usuarioJson).pipe(map(data => data));
+  }
 }
