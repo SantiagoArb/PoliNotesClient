@@ -74,4 +74,9 @@ export class MateriaService {
     return this._http.get(`http://localhost:${PUERTO}/getconcert`, { params: Params }).pipe(map(data => data));
 
   }
+
+  setNota(nota){
+    let usuarioJson = JSON.stringify(nota);
+    return this._http.post(`http://localhost:${PUERTO}/setnota`, usuarioJson).pipe(map(data => data));
+  }
 }

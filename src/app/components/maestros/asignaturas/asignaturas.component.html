@@ -113,7 +113,7 @@
             <th scope="row">{{i + 1 }}</th>
             <td>{{est.doc_estudiante}}</td>
             <td>{{est.nom_estudiante}}</td>
-            <td><input [disabled]="flagEditar" type="text" name="" value="2" style="width:50px;"></td>
+            <td><div style="margin-left:35%;"><input class="form-control" [(ngModel)]="est.nota" name="nota"  #nota type="text" [value]="est.nota" style="width:50px;"></div></td>
             <td>
               <button (click)="editarNotas(est)" type="button" class="btn btn-outline-primary" name="button"><i class="far fa-edit"></i></button>
               <button (click)="guardarRow(est)" type="button" style="margin-left:5px;" class="btn btn-outline-success" name="button"><i class="far fa-save"></i></button>

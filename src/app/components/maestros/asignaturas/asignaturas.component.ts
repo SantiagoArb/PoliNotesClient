@@ -95,7 +95,9 @@ export class AsignaturasComponent implements OnInit {
     }
   }
 
-  editarNotas(item:any){
+  editarNotas(item:NgForm){
+
+
     if(this.flagEditar){
       this.flagEditar = false
     }else{
@@ -146,13 +148,26 @@ CargarNotas(select:any){
     console.log(select);
     this._ms.getEstudianteMateria(this.matSelected.id_MATERIA, select.value).subscribe(data => {
       this.students =<any> data;
+      console.log(data);
     });
   }
 
 }
 
-guardarRow(est:any){
-  console.log(est);
+guardarRow(item:any){
+let nota:materia_est = new materia_est();
+nota.setDoc_estudiante(item.doc_estudiante);
+nota.setId_con(item.id_con);
+nota.setNota(item.nota);
+nota.setId_nota(item.id_nota);
+
+this._ms.setNota(nota).subscribe(data =>{
+  this.estado =<any> data;
+  new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+      this.estado = null;
+  });
+
+})
 }
 
   guardarEstudiante(formulario: NgForm) {
