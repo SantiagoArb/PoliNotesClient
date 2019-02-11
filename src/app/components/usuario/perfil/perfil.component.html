@@ -14,14 +14,10 @@
     <div class="col-10 div-content">
       <div class=" animated fadeIn fast content">
         <div class="container">
+          <h1>{{perfil.nick_USER | uppercase }}</h1>
+          <h3>{{perfil.doc_USER}}</h3>
         <form #forma="ngForm" (ngSubmit)="actualizar(forma)">
         <br>
-        <div class="form-row">
-          <div class="form-group col-3">
-            <label for="inputname">Nickname</label>
-            <input [(ngModel)]="perfil.nick_USER" name="user" required #user="ngModel" type="text" readonly="readonly" class="form-control" id="inputname" placeholder="">
-          </div>
-        </div>
 
 
         <div class="form-row">
@@ -36,10 +32,7 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group col-3">
-            <label for="inputdoc">Documento</label>
-            <input [(ngModel)]="perfil.doc_USER" name="documento" required #documento="ngModel" type="text" readonly="readonly" class="form-control" id="inputdoc" placeholder="">
-          </div>
+          
           <div class="form-group col-md-3">
             <label for="inputemail">Correo</label>
             <input [(ngModel)]="perfil.correo_USER" name="correo" required #correo="ngModel" type="text" id="inputemail" class="form-control" placeholder="">

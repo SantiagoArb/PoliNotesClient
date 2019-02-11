@@ -15,9 +15,11 @@ export class EstudianteComponent implements OnInit {
   matSelected:any;
   students:any=[];
   ConcertSelect:any;
+  comentario:string;
   constructor(private _us:UsuarioService,
               private router:Router,
             private _ms: MateriaService) {
+              this.comentario ="";
     if (!localStorage.getItem('LocalSesion')) {
       this.router.navigate(['/login']);
     } else {
@@ -54,6 +56,11 @@ CargarNotas(mat){
     console.log(data);
   });
 
+}
+
+cargarComentario(nota){
+  this.comentario = nota.comentario;
+  console.log(nota);
 }
 
 }

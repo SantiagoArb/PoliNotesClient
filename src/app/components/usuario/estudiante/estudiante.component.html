@@ -14,21 +14,26 @@
 
       <ul class="nav">
         <li (click)="CargarNotas(materia)" #mat *ngFor="let materia of materias" style="margin-left:0.2%;">
-          <h5><span class="badge badge-dark main-color" >{{materia.nombre_MATERIA}}</span></h5>
+          <h5><span class="badge badge-dark main-color">{{materia.nombre_MATERIA}}</span></h5>
         </li>
       </ul>
 
       <div *ngIf="matSelected" class="row" style="margin-left:0.2%;">
         <h3><span class="badge badge-dark main-color">Codigo: </span> {{matSelected.codigo_MATERIA}}&nbsp;</h3>
         <h3> <span class="badge badge-dark main-color"> Nombre: </span> {{matSelected.nombre_MATERIA}} </h3>
+
+      </div>
+      <div *ngIf="ConcertSelect" class="alert alert-info right-block" role="alert">
+        Presiona en la nota para visualizar los comentarios.
       </div>
       <div *ngIf="ConcertSelect" class="table-responsive-md">
-        <table class="table table-striped table-hover table-info table-borderless">
+        <table class="table table-striped table-hover table-warning table-borderless">
           <thead class="thead-dark">
-            <tr >
+            <tr>
               <th scope="col">Documento</th>
               <th scope="col">Nombre</th>
               <th *ngFor="let concertacion of ConcertSelect; let i = index" scope="col">{{concertacion.porcentaje}}% <br> ({{concertacion.nombre_conertacion}})</th>
+              <th scope="col">Definitiva</th>
               <!--th>
               <div *ngIf="ConcertSelect" class="container">
                 <select (click)="CargarNotas(SelectConcertacion)" [(ngModel)]="concertacion" name="SelectConcertacion" required #SelectConcertacion="ngModel" class="custom-select">
@@ -44,18 +49,22 @@
             <tr>
               <td>{{perfil.doc_USER}}</td>
               <td>{{perfil.nombre_USER}}</td>
-              <td *ngFor="let concert of ConcertSelect;">{{concert.nota}}</td>
-
-
+              <td style="cursor:pointer;" class="td-nota" (click)="cargarComentario(concert)" *ngFor="let concert of ConcertSelect;">{{concert.nota}}</td>
+              <td>
+                <div *ngIf="ConcertSelect[0].definitiva < 2.95" style="color:red;"><h5>{{ConcertSelect[0].definitiva}}</h5></div>
+                <div *ngIf="ConcertSelect[0].definitiva > 2.95" style="color:green;"><h5>{{ConcertSelect[0].definitiva}}</h5></div>
+              </td>
             </tr>
 
           </tbody>
         </table>
       </div>
-
-  </div>
+      <div class="col-5">
+      <textarea maxlength="100" *ngIf="ConcertSelect" readonly class="form-control" name="name" rows="8" cols="80">{{comentario}}</textarea>
 </div>
+    </div>
+  </div>
 
-<footer>
-  <app-footer></app-footer>
-</footer>
+  <footer>
+    <app-footer></app-footer>
+  </footer>

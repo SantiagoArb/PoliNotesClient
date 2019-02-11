@@ -16,8 +16,8 @@ export class AppComponent {
       this.login=false;
     }
 
-    setTimeout(function(){
+  /*  setTimeout(function(){
       localStorage.removeItem("LocalSesion");
-    },120000);
+    },120000);*/
   }
 }

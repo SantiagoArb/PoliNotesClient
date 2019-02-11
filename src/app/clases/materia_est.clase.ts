@@ -5,6 +5,7 @@ export class materia_est{
    private id_con:number;
    private id_nota:number;
    private nota:number;
+   private comentario:string;
 
    public estMat() {
    }
@@ -12,6 +13,14 @@ export class materia_est{
    public getId_con(){
      return this.id_con;
    }
+
+   public getComentario(){
+     return this.comentario;
+   }
+   public setComentario(coment){
+     this.comentario = coment;
+   }
+
 
    public setId_con(idx:number){
      this.id_con = idx;

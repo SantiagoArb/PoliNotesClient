@@ -80,8 +80,24 @@ export class MateriaService {
     return this._http.post(`http://localhost:${PUERTO}/setnota`, usuarioJson).pipe(map(data => data));
   }
 
+
   getMisNotas(datos){
     let usuarioJson = JSON.stringify(datos);
     return this._http.post(`http://localhost:${PUERTO}/getnotas`, usuarioJson).pipe(map(data => data));
   }
+
+  getValorConcertado(idx) {
+    let Params = new HttpParams();
+
+    // Begin assigning parameters
+    Params = Params.append('idx', idx);
+    return this._http.get(`http://localhost:${PUERTO}/concertado`, { params: Params }).pipe(map(data => data));
+
+  }
+
+  updateConcertacion(datos){
+    let usuarioJson = JSON.stringify(datos);
+    return this._http.post(`http://localhost:${PUERTO}/updconcertacion`, usuarioJson).pipe(map(data => data));
+  }
+
 }

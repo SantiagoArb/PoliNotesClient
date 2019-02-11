@@ -14,7 +14,7 @@
 
       <ul class="nav">
         <li (click)="cargarEstudiantes(materia)" #mat *ngFor="let materia of materias" style="margin-left:0.2%;">
-          <h5><span class="badge badge-dark main-color" >{{materia.nombre_MATERIA}}</span></h5>
+          <h5><span class="badge badge-dark main-color">{{materia.nombre_MATERIA}}</span></h5>
         </li>
       </ul>
       <br>
@@ -86,25 +86,26 @@
     <div *ngIf="matSelected" class="row" style="margin-left:0.2%;">
       <h3><span class="badge badge-dark main-color">Codigo: </span> {{matSelected.codigo_MATERIA}}&nbsp;</h3>
       <h3> <span class="badge badge-dark main-color"> Nombre: </span> {{matSelected.nombre_MATERIA}} </h3>
-      <button *ngIf="matSelected" data-toggle="modal" data-target="#exampleModal" type="button" style="margin-left:1%; margin-bottom:1%;" class="btn btn-outline-primary" name="button">Añadir Nota</button>
+      <button (click)="validarConcertacion()" *ngIf="matSelected" data-toggle="modal" data-target="#exampleModal" type="button" style="margin-left:1%; margin-bottom:1%;" class="btn btn-outline-primary" name="button">Concertacion</button>
     </div>
 
     <div class="table-responsive-md">
-      <table class="table table-striped table-hover table-success table-borderless">
+      <table class="table table-striped table-hover table-warning table-borderless">
         <thead class="thead-dark">
-          <tr >
+          <tr>
             <th scope="col">#</th>
             <th scope="col">Documento</th>
             <th scope="col">Nombre</th>
             <!--th *ngFor="let concertacion of ConcertSelect; let i = index" scope="col">{{concertacion.valor_porcentual}}% <br> ({{concertacion.nom_concertacion}})</th-->
             <th>
-            <div *ngIf="ConcertSelect" class="container">
-              <select (click)="CargarNotas(SelectConcertacion)" [(ngModel)]="concertacion" name="SelectConcertacion" required #SelectConcertacion="ngModel" class="custom-select">
-              <option >Seleccione</option>
-              <option *ngFor="let concertacion of ConcertSelect" [value]="concertacion.id_concertacion">{{concertacion.nom_concertacion}} {{concertacion.valor_porcentual}}%</option>
-            </select>
-          </div>
-</th>
+              <div *ngIf="ConcertSelect" class="container">
+                <select (click)="CargarNotas(SelectConcertacion)" [(ngModel)]="concertacion" name="SelectConcertacion" required #SelectConcertacion="ngModel" class="custom-select">
+                  <option default>Seleccione</option>
+                  <option *ngFor="let concertacion of ConcertSelect" [value]="concertacion.id_concertacion">{{concertacion.nom_concertacion}} {{concertacion.valor_porcentual}}%</option>
+                </select>
+              </div>
+            </th>
+            <th>Comentarios</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -113,10 +114,12 @@
             <th scope="row">{{i + 1 }}</th>
             <td>{{est.doc_estudiante}}</td>
             <td>{{est.nom_estudiante}}</td>
-            <td><div style="margin-left:35%;"><input class="form-control" [(ngModel)]="est.nota" name="nota"  #nota type="text" [value]="est.nota" style="width:50px;"></div></td>
             <td>
-              <button (click)="editarNotas(est)" type="button" class="btn btn-outline-primary" name="button"><i class="far fa-edit"></i></button>
-              <button (click)="guardarRow(est)" type="button" style="margin-left:5px;" class="btn btn-outline-success" name="button"><i class="far fa-save"></i></button>
+              <div style="margin-left:35%;"><input class="form-control" [(ngModel)]="est.nota" name="nota" #nota type="text" [value]="est.nota" style="width:50px;"></div>
+            </td>
+            <td><textarea maxlength="100" [(ngModel)]="est.comentario" [value]="est.comentario" name="comentario" #comentario="ngModel" type="text" class="form-control"></textArea></td>
+            <td>
+              <button (click)="guardarRow(est)" type="button" style="margin-left:5px;" class="btn btn-outline-primary" name="button"><i class="far fa-save"></i></button>
               <button (click)="eliminarEst(est)" type="button" style="margin-left:5px;" class="btn btn-outline-danger" name="button"><i class="fas fa-trash-alt"></i></button>
             </td>
           </tr>
@@ -134,17 +137,19 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Concertacion</h5>
+
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+
       </div>
       <div class="modal-body">
-
+        <p style="color:red">Concertado: {{valorConcertado}}%</p>
         <form #formaCon="ngForm" (ngSubmit)="setConcertacion(formaCon)">
           <br>
           <div class="form-row">
-            <div class="form-group col-6">
+            <div class="form-group">
               <label for="inputname">Nombre Nota</label>
               <input [(ngModel)]="concertacion.nom_concertacion" name="nombre" required #nombre="ngModel" type="text" class="form-control" id="inputname" placeholder="Taller, Quiz etc">
             </div>
@@ -152,7 +157,7 @@
 
 
           <div class="form-row">
-            <div class="form-group col-6">
+            <div class="form-group ">
               <label for="inputname">Valor Porcentual</label>
               <input [(ngModel)]="concertacion.porcentaje" name="valor" required #valor="ngModel" type="text" class="form-control" id="inputname" placeholder="10, 20, 25 etc">
             </div>
@@ -160,8 +165,35 @@
           </div>
 
 
-          <button [disabled]="!formaCon.valid" type="submit" class="btn btn-outline-primary">Guardar</button>
+          <button [disabled]="!formaCon.valid || valorConcertado === 100" type="submit" class="btn btn-outline-primary">Guardar</button>
         </form>
+
+  <br>
+        <div class="table-responsive-md">
+          <table class="table table-striped table-hover table-warning table-borderless">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Valor</th>
+                <!--th *ngFor="let concertacion of ConcertSelect; let i = index" scope="col">{{concertacion.valor_porcentual}}% <br> ({{concertacion.nom_concertacion}})</th-->
+
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let concertacion of ConcertSelect; index as i ">
+                <th scope="row">{{i + 1 }}</th>
+                <td><div><input class="form-control" [(ngModel)]="concertacion.nom_concertacion" nombre="valor" #nombre type="text" [value]="concertacion.nom_concertacion" ></div></td>
+                <td><div style="margin-left:35%;"><input class="form-control" [(ngModel)]="concertacion.valor_porcentual" name="valor" #valor type="text" [value]="concertacion.valor_porcentual" style="width:50px;"></div></td>
+                <td>
+                  <button (click)="actualizarConcertacion(concertacion)" type="button" style="margin-left:5px;" class="btn btn-outline-primary" name="button"><i class="far fa-save"></i></button>
+                  </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
 
       </div>
       <div class="modal-footer">

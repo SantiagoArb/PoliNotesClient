@@ -5,3 +5,7 @@ span{
 .main-color{
   background:#3f51b5;
 }
+.td-nota:active{
+  background: black;
+  opacity: 0.1;
+}

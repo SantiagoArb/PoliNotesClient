@@ -38,6 +38,8 @@ export class AsignaturasComponent implements OnInit {
   facultadSelected:any;
   estadoCon:boolean;
   ConcertSelect:any;
+  conSelect:any;
+  valorConcertado:any;
   concertacion:IConcertacion={
     id_concertacion:null,
     nom_concertacion:null,
@@ -146,6 +148,7 @@ CargarNotas(select:any){
 
   }else{
     console.log(select);
+    this.conSelect = select;
     this._ms.getEstudianteMateria(this.matSelected.id_MATERIA, select.value).subscribe(data => {
       this.students =<any> data;
       console.log(data);
@@ -160,6 +163,7 @@ nota.setDoc_estudiante(item.doc_estudiante);
 nota.setId_con(item.id_con);
 nota.setNota(item.nota);
 nota.setId_nota(item.id_nota);
+nota.setComentario(item.comentario);
 
 this._ms.setNota(nota).subscribe(data =>{
   this.estado =<any> data;
@@ -231,11 +235,36 @@ this._ms.setNota(nota).subscribe(data =>{
       new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
         if(this.estadoCon){
           formulario.reset();
-          window.location.reload();
+          this.validarConcertacion();
+          this.cargarEstudiantes(this.matSelected);
+          this.estadoCon = null;
         }
       });
 
 
+    });
+  }
+
+  validarConcertacion(){
+
+    this._ms.getValorConcertado(this.matSelected.id_MATERIA).subscribe(data =>{
+      this.valorConcertado = data;
+    });
+  }
+
+  actualizarConcertacion(data:any){
+    let concertacion:Concertacion = new Concertacion();
+    concertacion.setId_concertacion(data.id_concertacion);
+    concertacion.setNom_concertacion(data.nom_concertacion);
+    concertacion.setValor_porcentual(data.valor_porcentual);
+    this._ms.updateConcertacion(concertacion).subscribe(data =>{
+      this.estadoCon = <boolean> data;
+      console.log(data);
+      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
+        this.estadoCon = null;
+        this.validarConcertacion();
+        this.cargarEstudiantes(this.matSelected);
+      });
     });
   }
 
