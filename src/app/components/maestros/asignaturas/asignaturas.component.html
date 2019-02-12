@@ -87,6 +87,7 @@
       <h3><span class="badge badge-dark main-color">Codigo: </span> {{matSelected.codigo_MATERIA}}&nbsp;</h3>
       <h3> <span class="badge badge-dark main-color"> Nombre: </span> {{matSelected.nombre_MATERIA}} </h3>
       <button (click)="validarConcertacion()" *ngIf="matSelected" data-toggle="modal" data-target="#exampleModal" type="button" style="margin-left:1%; margin-bottom:1%;" class="btn btn-outline-primary" name="button">Concertacion</button>
+      <button *ngIf="conSelect" (click)="guardarTodos(students)" type="button"  class="btn btn-primary" style="margin-left:35%; margin-bottom:1%;" name="button"><i class="fas fa-save"></i> Guardar Todos</button>
     </div>
 
     <div class="table-responsive-md">
@@ -115,7 +116,7 @@
             <td>{{est.doc_estudiante}}</td>
             <td>{{est.nom_estudiante}}</td>
             <td>
-              <div style="margin-left:35%;"><input class="form-control" [(ngModel)]="est.nota" name="nota" #nota type="text" [value]="est.nota" style="width:50px;"></div>
+              <div style="margin-left:35%;"><input class="form-control" [(ngModel)]="est.nota" name="nota" #nota type="number" min="0" max="5" [value]="est.nota" style="width:30%;"></div>
             </td>
             <td><textarea maxlength="100" [(ngModel)]="est.comentario" [value]="est.comentario" name="comentario" #comentario="ngModel" type="text" class="form-control"></textArea></td>
             <td>
@@ -169,6 +170,7 @@
         </form>
 
   <br>
+  <h5>Concertacion</h5>
         <div class="table-responsive-md">
           <table class="table table-striped table-hover table-warning table-borderless">
             <thead class="thead-dark">
@@ -187,7 +189,8 @@
                 <td><div><input class="form-control" [(ngModel)]="concertacion.nom_concertacion" nombre="valor" #nombre type="text" [value]="concertacion.nom_concertacion" ></div></td>
                 <td><div style="margin-left:35%;"><input class="form-control" [(ngModel)]="concertacion.valor_porcentual" name="valor" #valor type="text" [value]="concertacion.valor_porcentual" style="width:50px;"></div></td>
                 <td>
-                  <button (click)="actualizarConcertacion(concertacion)" type="button" style="margin-left:5px;" class="btn btn-outline-primary" name="button"><i class="far fa-save"></i></button>
+                  <button (click)="actualizarConcertacion(concertacion)" type="button" style="margin-left:5px;" class="btn btn-primary" name="button"><i class="far fa-save"></i></button>
+                  <button (click)="deleteConcertacion(concertacion)" type="button" style="margin-left:5px;" class="btn btn-danger" name="button"><i class="fas fa-trash-alt"></i></button>
                   </td>
               </tr>
 

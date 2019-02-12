@@ -100,4 +100,14 @@ export class MateriaService {
     return this._http.post(`http://localhost:${PUERTO}/updconcertacion`, usuarioJson).pipe(map(data => data));
   }
 
+  guardarNotas(datos){
+    let usuarioJson = JSON.stringify(datos);
+    return this._http.post(`http://localhost:${PUERTO}/guardarnotas`, usuarioJson).pipe(map(data => data));
+  }
+
+  deleteConcertacion(datos){
+    let usuarioJson = JSON.stringify(datos);
+    return this._http.post(`http://localhost:${PUERTO}/deleteconcert`, usuarioJson).pipe(map(data => data));
+  }
+
 }

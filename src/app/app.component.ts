@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -15,6 +15,8 @@ export class AppComponent {
     }else{
       this.login=false;
     }
+
+
 
   /*  setTimeout(function(){
       localStorage.removeItem("LocalSesion");

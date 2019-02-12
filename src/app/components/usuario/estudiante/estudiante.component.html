@@ -59,7 +59,8 @@
           </tbody>
         </table>
       </div>
-      <div class="col-5">
+      <div *ngIf="ConcertSelect" class="col-5">
+        <h5>Comentarios</h5>
       <textarea maxlength="100" *ngIf="ConcertSelect" readonly class="form-control" name="name" rows="8" cols="80">{{comentario}}</textarea>
 </div>
     </div>

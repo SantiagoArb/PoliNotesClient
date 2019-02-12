@@ -119,7 +119,7 @@ export class AsignaturasComponent implements OnInit {
 
     this._ms.guardarMAteria(mat).subscribe(data => {
       this.estado = <boolean>data;
-      new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
         this.cargarMaterias();
         formulario.reset();
         this.newMat = false;
@@ -167,7 +167,7 @@ nota.setComentario(item.comentario);
 
 this._ms.setNota(nota).subscribe(data =>{
   this.estado =<any> data;
-  new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+  new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
       this.estado = null;
   });
 
@@ -181,7 +181,7 @@ this._ms.setNota(nota).subscribe(data =>{
     obj.setId_materia(this.matSelected.id_MATERIA);
     this._ms.guardarEstudianteMateria(obj).subscribe(data => {
       this.estado = <boolean>data;
-      new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
         this.cargarEstudiantes(this.matSelected);
         formulario.reset();
         this.newEst = false;
@@ -197,7 +197,7 @@ this._ms.setNota(nota).subscribe(data =>{
     this._ms.deleteEstudianteMateria(est.id_materia,est.doc_estudiante).subscribe(data=>{
       this.estado = <boolean>data;
       this.estado = <boolean>data;
-      new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
         this.cargarEstudiantes(this.matSelected);
         this.estado = null;
       });
@@ -209,7 +209,7 @@ this._ms.setNota(nota).subscribe(data =>{
     if(this.matSelected){
       this._ms.deleteMateria(this.matSelected.id_MATERIA).subscribe(data =>{
         this.estado = <boolean>data;
-        new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+        new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
           this.cargarMaterias();
           this.newMat = false;
           this.newEst = false;
@@ -232,7 +232,7 @@ this._ms.setNota(nota).subscribe(data =>{
     console.log(con);
     this._ms.guardarConcertacion(con).subscribe(data =>{
       this.estadoCon = <boolean>data;
-      new Promise(resolve => setTimeout(()=>resolve(), 3000)).then(()=>{
+      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
         if(this.estadoCon){
           formulario.reset();
           this.validarConcertacion();
@@ -265,6 +265,33 @@ this._ms.setNota(nota).subscribe(data =>{
         this.validarConcertacion();
         this.cargarEstudiantes(this.matSelected);
       });
+    });
+  }
+
+  guardarTodos(students:any){
+
+    this._ms.guardarNotas(students).subscribe(data =>{
+      this.estado =<boolean> data;
+      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
+        this.estado = null;
+        this.CargarNotas(this.ConcertSelect);
+      });
+      console.log(data);
+    });
+  }
+
+  deleteConcertacion(data){
+    let obj:materia_est = new materia_est();
+    obj.setId_con(data.id_concertacion);
+    obj.setId_materia(this.matSelected.id_MATERIA);
+    this._ms.deleteConcertacion(obj).subscribe(data => {
+      this.estadoCon = <boolean> data;
+      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
+        this.estadoCon = null;
+        this.validarConcertacion();
+        this.cargarEstudiantes(this.matSelected);
+      });
+
     });
   }
 
