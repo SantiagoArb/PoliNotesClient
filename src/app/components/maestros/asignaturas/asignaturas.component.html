@@ -87,7 +87,12 @@
       <h3><span class="badge badge-dark main-color">Codigo: </span> {{matSelected.codigo_MATERIA}}&nbsp;</h3>
       <h3> <span class="badge badge-dark main-color"> Nombre: </span> {{matSelected.nombre_MATERIA}} </h3>
       <button (click)="validarConcertacion()" *ngIf="matSelected" data-toggle="modal" data-target="#exampleModal" type="button" style="margin-left:1%; margin-bottom:1%;" class="btn btn-outline-primary" name="button">Concertacion</button>
+      <div class="col-2">
+      <input (keyup.enter)="searchEstudiante(buscar.value)" #buscar class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      </div>
+      <div class="col-3">
       <button *ngIf="conSelect" (click)="guardarTodos(students)" type="button"  class="btn btn-primary" style="margin-left:35%; margin-bottom:1%;" name="button"><i class="fas fa-save"></i> Guardar Todos</button>
+</div>
     </div>
 
     <div class="table-responsive-md">
@@ -95,8 +100,8 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Documento</th>
-            <th scope="col">Nombre</th>
+            <th (click)="orderByDoc(students)" class="point" scope="col">Documento <i *ngIf="flagSortByDoc" class="fas fa-caret-down"></i><i *ngIf="!flagSortByDoc" class="fas fa-caret-up"></i></th>
+            <th (click)="orderByname(students)" class="point" scope="col">Nombre <i *ngIf="flagSortByName" class="fas fa-caret-down"></i> <i *ngIf="!flagSortByName" class="fas fa-caret-up"></i></th>
             <!--th *ngFor="let concertacion of ConcertSelect; let i = index" scope="col">{{concertacion.valor_porcentual}}% <br> ({{concertacion.nom_concertacion}})</th-->
             <th>
               <div *ngIf="ConcertSelect" class="container">

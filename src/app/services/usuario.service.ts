@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Usuario } from '../clases/usuario.clase';
-import { Router } from '@angular/router';
 import { PUERTO } from '../clases/constantes';
 
 @Injectable({
@@ -11,22 +10,11 @@ import { PUERTO } from '../clases/constantes';
 export class UsuarioService {
 perfil:Usuario;
 port:number = 8080;
-  constructor(private _http:HttpClient,
-              private route:Router) { }
+  constructor(private _http:HttpClient) { }
 
-  Loggear(user:Usuario){
-     let usuarioJson = JSON.stringify(user);
-     return this._http.post(`http://localhost:${PUERTO}/login`, usuarioJson).pipe( map(data => data));
-   }
 
-   LogOut(){
-     localStorage.removeItem('LocalSesion');
-     this.route.navigate(['/login']);
-   }
 
-   getSesionActual(){
-     return this.perfil = JSON.parse(localStorage.getItem("LocalSesion"));
-   }
+
 
    Registrar(user:Usuario){
      let usuarioJson = JSON.stringify(user);

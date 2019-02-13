@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,10 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 estudiante = false;
-  constructor(private router:Router) {
+  constructor(private router:Router,
+              private _as:AuthService) {
 
-    if(!localStorage.getItem('LocalSesion')){
+    if(!this._as.obtenerSesion()){
       this.router.navigate(['/login']);
       console.log("no hay session");
     }

@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../clases/usuario.clase';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +14,9 @@ export class LoginComponent implements OnInit {
 
 
   error:boolean;
-  constructor(private _us: UsuarioService,
-              private root:Router) {
-                if(localStorage.getItem('LocalSesion')){
+  constructor(
+              private root:Router, private _as:AuthService) {
+                if(this._as.obtenerSesion()){
                   this.root.navigate(['/home']);
                 }
                }
@@ -28,9 +29,9 @@ export class LoginComponent implements OnInit {
     let user:Usuario = new Usuario();
     user.setNick_user(form.value.user);
     user.setPassword_user(form.value.pass);
-    this._us.Loggear(user).subscribe(data => {
+    this._as.Loggear(user).subscribe(data => {
       if(data){
-        this.userLoged(data);
+        this._as.setSession(data);
 
         window.location.reload();
       }else{
@@ -40,9 +41,9 @@ export class LoginComponent implements OnInit {
   }
 
   userLoged(data:any){
-    let json = JSON.stringify(data);
-    localStorage.setItem('LocalSesion',json);
-    console.log(data);
+    this._as.setSession(btoa(data));
+
+
   }
 
 

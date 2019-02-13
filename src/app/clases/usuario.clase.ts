@@ -3,32 +3,32 @@
 export class Usuario{
 
     private ID_USER:Number;
-    private DOC_USER:String;
-    private NICK_USER:String;
-    private PASSWORD_USER:String;
-    private NOMBRE_USER:String;
-    private APELLIDOS_USER:String;
-    private CELULAR_USER:String;
-    private CORREO_USER:String;
+    private DOC_USER:string;
+    private NICK_USER:string;
+    private PASSWORD_USER:string;
+    private NOMBRE_USER:string;
+    private APELLIDOS_USER:string;
+    private CELULAR_USER:string;
+    private CORREO_USER:string;
     private ID_PERFIL_USER:Number;
     private ESTADO_USER:Number;
 
     constructor(){ }
 
-    setId_user(ide:Number){
+    setId_user(ide){
       this.ID_USER = ide;
     }
     getId_user(){
       return this.ID_USER;
     }
-    setDoc_user(doc:String){
+    setDoc_user(doc){
       this.DOC_USER = doc;
     }
     getDoc_user(){
       return this.DOC_USER;
     }
 
-    setNick_user(nick:String){
+    setNick_user(nick){
       this.NICK_USER = nick;
     }
     getNick_user(){
@@ -39,7 +39,7 @@ export class Usuario{
        return this.PASSWORD_USER;
    }
 
-   setPassword_user(pass:String) {
+   setPassword_user(pass) {
        this.PASSWORD_USER = pass;
    }
 
@@ -47,7 +47,7 @@ export class Usuario{
        return this.NOMBRE_USER;
    }
 
-   setNombre_user( name:String) {
+   setNombre_user( name) {
        this.NOMBRE_USER = name;
    }
 
@@ -55,7 +55,7 @@ export class Usuario{
        return this.APELLIDOS_USER;
    }
 
-   setApellidos_user(apellidos_user:String) {
+   setApellidos_user(apellidos_user) {
        this.APELLIDOS_USER = apellidos_user;
    }
 
@@ -63,7 +63,7 @@ export class Usuario{
        return this.CELULAR_USER;
    }
 
-   setCelular_user(celular_user:String) {
+   setCelular_user(celular_user) {
        this.CELULAR_USER = celular_user;
    }
 
@@ -71,7 +71,7 @@ export class Usuario{
        return this.CORREO_USER;
    }
 
-   setCorreo_user( correo_user:String) {
+   setCorreo_user( correo_user) {
        this.CORREO_USER = correo_user;
    }
 
@@ -79,7 +79,7 @@ export class Usuario{
        return this.ID_PERFIL_USER;
    }
 
-   setId_perfil_user(id_perfil_user:Number) {
+   setId_perfil_user(id_perfil_user) {
        this.ID_PERFIL_USER = id_perfil_user;
    }
 
@@ -87,7 +87,7 @@ export class Usuario{
        return this.ESTADO_USER;
    }
 
-   setEstado_user( estado_user:Number) {
+   setEstado_user( estado_user) {
        this.ESTADO_USER = estado_user;
    }
 

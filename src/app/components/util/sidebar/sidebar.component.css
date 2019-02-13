@@ -5,7 +5,8 @@ a{
 }
 
 .active{
-  background: white;
+  background: black;
+
   opacity: 0.5;
 
 
@@ -18,7 +19,7 @@ li{
 }
 
 li:hover {
-  background: white;
+  background: black;
   opacity: 0.5;
   text-shadow: 0 0 5px #8c909a;
 
@@ -81,7 +82,7 @@ span {
 }
 
 .menu-title {
-  color: black;
+  color: white;
   display: inline-block;
   font-size: $sidebar-menu-font-size;
   line-height: 1;

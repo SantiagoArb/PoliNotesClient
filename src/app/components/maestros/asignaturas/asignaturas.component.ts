@@ -8,6 +8,7 @@ import { materia_est } from 'src/app/clases/materia_est.clase';
 import { FacultadService } from 'src/app/services/facultad.service';
 import { IConcertacion } from 'src/app/Interfaces/concertacion.interface';
 import { Concertacion } from 'src/app/clases/concertacion.clase';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-asignaturas',
@@ -25,6 +26,8 @@ export class AsignaturasComponent implements OnInit {
     doc_estudiante: null,
     nom_estudiante: null
   }
+  flagSortByName:boolean;
+  flagSortByDoc:boolean;
   newMat: boolean;
   newEst: boolean;
   perfil: any;
@@ -33,6 +36,7 @@ export class AsignaturasComponent implements OnInit {
   matSelected: any = [];
   estudiantes: any[];
   students:any=[];
+  studentsAux:any=[];
   flagEditar:boolean;
   facultades:any=[];
   facultadSelected:any;
@@ -49,18 +53,21 @@ export class AsignaturasComponent implements OnInit {
   };
   constructor(private _ms: MateriaService,
               private router: Router,
-              private _fs:FacultadService) {
+              private _fs:FacultadService,
+              private _as:AuthService) {
       this.flagEditar = true;
     this.matSelected = null;
     this.newMat = false;
     this.newEst = false;
+    this.flagSortByName = true;
+    this.flagSortByDoc = true;
 
     this._fs.getFacultades().subscribe(data=>{
       this.facultades = data;
       console.log(data);
     })
 
-    if (!localStorage.getItem('LocalSesion')) {
+    if (!this._as.obtenerSesion()) {
       this.router.navigate(['/login']);
     } else {
       this.cargarMaterias();
@@ -72,7 +79,7 @@ export class AsignaturasComponent implements OnInit {
   }
 
   cargarMaterias(){
-    this.perfil = JSON.parse(localStorage.getItem("LocalSesion"));
+    this.perfil = this._as.obtenerSesion();
     this._ms.getMaterias(this.perfil.id_USUARIO).subscribe(data => {
       console.log(data);
       this.materias = data;
@@ -109,7 +116,7 @@ export class AsignaturasComponent implements OnInit {
   }
 
   guardar(formulario: NgForm) {
-    this.perfil = JSON.parse(localStorage.getItem("LocalSesion"));
+    this.perfil = this._as.obtenerSesion();
     let mat: Materia = new Materia();
     mat.setID_MATERIA("1");
     mat.setCODIGO_MATERIA(formulario.value.codigo);
@@ -151,6 +158,7 @@ CargarNotas(select:any){
     this.conSelect = select;
     this._ms.getEstudianteMateria(this.matSelected.id_MATERIA, select.value).subscribe(data => {
       this.students =<any> data;
+      this.studentsAux = this.students;
       console.log(data);
     });
   }
@@ -226,7 +234,7 @@ this._ms.setNota(nota).subscribe(data =>{
     con.setNom_concertacion(formulario.value.nombre);
     con.setValor_porcentual(formulario.value.valor);
     con.setId_materia(this.matSelected.id_MATERIA)
-    this.perfil = JSON.parse(localStorage.getItem("LocalSesion"));
+    this.perfil = this._as.obtenerSesion();
     con.setDoc_maestro(this.perfil.doc_USER);
     con.setId_usuario(this.matSelected.id_MAESTRO);
     console.log(con);
@@ -295,4 +303,82 @@ this._ms.setNota(nota).subscribe(data =>{
     });
   }
 
+  orderByname(students){
+
+    if(this.flagSortByName){
+      this.students =  students.sort(function(a,b){
+
+        if (a.nom_estudiante < b.nom_estudiante) {
+            return -1;
+          }
+          if (a.nom_estudiante > b.nom_estudiante ) {
+            return 1;
+          }
+          // a debe ser igual b
+          return 0;
+        });
+        this.flagSortByName = false;
+    }else{
+      this.students =  students.sort(function(a,b){
+        if (a.nom_estudiante < b.nom_estudiante) {
+            return 1;
+          }
+          if (a.nom_estudiante > b.nom_estudiante ) {
+            return -1;
+          }
+          // a debe ser igual b
+          return 0;
+        });
+        this.flagSortByName=true;
+    }
+  }
+
+  orderByDoc(students){
+    if(this.flagSortByDoc){
+      this.students =  students.sort(function(a,b){
+
+        if (a.doc_estudiante < b.doc_estudiante) {
+            return -1;
+          }
+          if (a.doc_estudiante > b.doc_estudiante ) {
+            return 1;
+          }
+          // a debe ser igual b
+          return 0;
+        });
+        this.flagSortByDoc = false;
+    }else{
+      this.students =  students.sort(function(a,b){
+        if (a.doc_estudiante < b.doc_estudiante) {
+            return 1;
+          }
+          if (a.doc_estudiante > b.doc_estudiante ) {
+            return -1;
+          }
+          // a debe ser igual b
+          return 0;
+        });
+        this.flagSortByDoc=true;
+  }
+}
+
+searchEstudiante(buscar){
+  this.students = this.studentsAux;
+if(buscar !== ""){
+
+  let result = null;
+  result = this.studentsAux.find(word =>word.doc_estudiante === buscar);
+  console.log("Result: ", result);
+  if(result !== undefined){
+    this.students =[];
+    console.log("entro al if");
+    this.students.push(result);
+  }
+
+
+  console.log("el vector quedo:",this.students);
+}
+
+
+}
 }

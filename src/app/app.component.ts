@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy{
   title = 'PoliNotesV2';
   login:boolean;
   constructor(private rout:ActivatedRoute){
@@ -15,11 +15,12 @@ export class AppComponent {
     }else{
       this.login=false;
     }
-
-
-
-  /*  setTimeout(function(){
+/*  setTimeout(function(){
       localStorage.removeItem("LocalSesion");
     },120000);*/
+  }
+
+  ngOnDestroy(){
+    localStorage.removeItem("LocalSesion");
   }
 }

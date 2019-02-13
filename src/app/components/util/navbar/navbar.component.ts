@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,8 +8,9 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class NavbarComponent implements OnInit {
 sesionActual:any;
-  constructor(private _us:UsuarioService) {
-      this.sesionActual = this._us.getSesionActual();
+  constructor(
+              private _as:AuthService) {
+      this.sesionActual = this._as.obtenerSesion();
    }
 
   ngOnInit() {
@@ -17,6 +18,6 @@ sesionActual:any;
 
 
 salir(){
-this._us.LogOut();
+this._as.LogOut();
 }
 }

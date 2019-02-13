@@ -5,3 +5,8 @@ span{
 .main-color{
   background:#3f51b5;
 }
+
+.point:hover{
+  cursor:pointer;
+  color: #007bff;
+}
