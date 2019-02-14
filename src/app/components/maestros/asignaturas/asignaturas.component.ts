@@ -64,7 +64,6 @@ export class AsignaturasComponent implements OnInit {
 
     this._fs.getFacultades().subscribe(data=>{
       this.facultades = data;
-      console.log(data);
     })
 
     if (!this._as.obtenerSesion()) {

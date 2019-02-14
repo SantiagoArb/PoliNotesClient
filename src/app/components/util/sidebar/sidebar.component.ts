@@ -10,15 +10,22 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SidebarComponent implements OnInit {
   tperfil:string ="";
+  flagSubmenu:boolean;
   constructor(private _as:AuthService) {
-
   this.tperfil = this._as.getSesion();
   }
 
   ngOnInit() {
 }
 
+submenu(){
+  if(this.flagSubmenu){
+    this.flagSubmenu = false;
+  }else{
+    this.flagSubmenu = true;
+  }
 
+}
 
 
 

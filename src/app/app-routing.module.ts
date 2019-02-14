@@ -8,6 +8,10 @@ import { UsuariosComponent } from './components/usuario/usuarios/usuarios.compon
 import { AsignaturasComponent } from './components/maestros/asignaturas/asignaturas.component';
 import { EstudianteComponent } from './components/usuario/estudiante/estudiante.component';
 
+import { BarrasComponent } from './components/maestros/graficos/barras/barras.component';
+import { DonasComponent } from './components/maestros/graficos/donas/donas.component';
+import { GeneralInfoComponent } from './components/maestros/general-info/general-info.component';
+
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -16,6 +20,9 @@ const routes: Routes = [
   { path: 'registro', component: RegistroComponent },
   { path: 'materias', component: AsignaturasComponent },
   { path: 'mismaterias', component: EstudianteComponent },
+  { path: 'grafica/barras',component: BarrasComponent},
+  { path: 'grafica/donas',component: DonasComponent },
+  { path: 'infomaterias', component: GeneralInfoComponent },
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];

@@ -19,6 +19,11 @@ import { AsignaturasComponent } from './components/maestros/asignaturas/asignatu
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { EstudianteComponent } from './components/usuario/estudiante/estudiante.component';
+import { ChartsModule } from 'ng2-charts';
+
+import { BarrasComponent } from './components/maestros/graficos/barras/barras.component';
+import { DonasComponent } from './components/maestros/graficos/donas/donas.component';
+import { GeneralInfoComponent } from './components/maestros/general-info/general-info.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,10 @@ import { EstudianteComponent } from './components/usuario/estudiante/estudiante.
     RegistroComponent,
     UsuariosComponent,
     AsignaturasComponent,
-    EstudianteComponent
+    EstudianteComponent,
+    BarrasComponent,
+    DonasComponent,
+    GeneralInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +48,8 @@ import { EstudianteComponent } from './components/usuario/estudiante/estudiante.
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

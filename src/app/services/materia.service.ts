@@ -110,4 +110,12 @@ export class MateriaService {
     return this._http.post(`http://localhost:${PUERTO}/deleteconcert`, usuarioJson).pipe(map(data => data));
   }
 
+  getCantidadEstudiantes(idx) {
+    let Params = new HttpParams();
+
+    // Begin assigning parameters
+    Params = Params.append('idx', idx);
+    return this._http.get(`http://localhost:${PUERTO}/getcantest`, { params: Params }).pipe(map(data => data));
+
+  }
 }
