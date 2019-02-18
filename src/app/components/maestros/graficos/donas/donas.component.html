@@ -16,16 +16,13 @@
         </li>
       </ul>
 
-      <div>
-        <div *ngIf="matSelected" style="display: block; overflow:scroll">
-        <canvas baseChart
-                    [data]="doughnutChartData"
-                    [labels]="doughnutChartLabels"
-                    [chartType]="doughnutChartType"
-                    (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"></canvas>
-      </div>
-</div>
+
+      <div *ngIf="matSelected" style="display: block; overflow:scroll">
+        <canvas baseChart [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [chartType]="pieChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"></canvas>
     </div>
   </div>
-  </div>
+</div>

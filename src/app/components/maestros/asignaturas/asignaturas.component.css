@@ -1,12 +1,15 @@
 span{
   cursor:pointer;
-  background-color:  white;
 }
 .main-color{
-  background:#3f51b5;
+  background:#007bff;
 }
 
 .point:hover{
   cursor:pointer;
   color: #007bff;
+}
+
+.istyle{
+  cursor:pointer;
 }

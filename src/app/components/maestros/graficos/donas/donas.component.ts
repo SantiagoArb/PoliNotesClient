@@ -10,13 +10,13 @@ import { MateriaService } from 'src/app/services/materia.service';
   styleUrls: ['./donas.component.css']
 })
 export class DonasComponent {
-  public doughnutChartLabels:string[] = [];
-  public doughnutChartData:number[] = [];
-  public doughnutChartType:string = 'doughnut';
+  public pieChartLabels:string[] = [];
+ public pieChartData:number[] = [];
+ public pieChartType:string = 'pie';
   perfil: any;
   materias: any = [];
   matSelected:any;
-  
+
   constructor(private _rs:ReportesService,
               private _as:AuthService,
               private router: Router,
@@ -36,19 +36,19 @@ export class DonasComponent {
   }
 
   cargarGrafica(materia:any){
-    this.doughnutChartLabels =[];
-
+    this.pieChartLabels =[];
+    this.pieChartData = [];
 
     this._rs.getEstudianteMateria(materia.id_MATERIA).subscribe(data => {
       let resultado:Array<Object> = <Array<Object>> data;
       console.log(data);
       for(let i = 0; i<resultado.length;i++){
         let value = <any> resultado[i];
-        this.doughnutChartLabels.push(value.nombre_Con);
-        this.doughnutChartData.push(value.aprovaron);
+        this.pieChartLabels.push(value.nombre_Con);
+        this.pieChartData.push(value.aprovaron);
       }
-
-
+      console.log(this.pieChartLabels);
+      console.log(this.pieChartData);
     });
 
     this.matSelected = materia;

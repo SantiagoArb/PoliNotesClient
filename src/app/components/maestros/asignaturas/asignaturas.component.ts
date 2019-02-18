@@ -26,8 +26,9 @@ export class AsignaturasComponent implements OnInit {
     doc_estudiante: null,
     nom_estudiante: null
   }
-  flagSortByName:boolean;
-  flagSortByDoc:boolean;
+  concertToDelente:any;
+  flagSortByName: boolean;
+  flagSortByDoc: boolean;
   newMat: boolean;
   newEst: boolean;
   perfil: any;
@@ -35,34 +36,34 @@ export class AsignaturasComponent implements OnInit {
   materias: any = [];
   matSelected: any = [];
   estudiantes: any[];
-  students:any=[];
-  studentsAux:any=[];
-  flagEditar:boolean;
-  facultades:any=[];
-  facultadSelected:any;
-  estadoCon:boolean;
-  ConcertSelect:any;
-  conSelect:any;
-  valorConcertado:any;
-  concertacion:IConcertacion={
-    id_concertacion:null,
-    nom_concertacion:null,
-    porcentaje:null,
-    doc_maestro:null,
-    id_materia:null
+  students: any = [];
+  studentsAux: any = [];
+  flagEditar: boolean;
+  facultades: any = [];
+  facultadSelected: any;
+  estadoCon: boolean;
+  ConcertSelect: any;
+  conSelect: any;
+  valorConcertado: any;
+  concertacion: IConcertacion = {
+    id_concertacion: null,
+    nom_concertacion: null,
+    porcentaje: null,
+    doc_maestro: null,
+    id_materia: null
   };
   constructor(private _ms: MateriaService,
-              private router: Router,
-              private _fs:FacultadService,
-              private _as:AuthService) {
-      this.flagEditar = true;
+    private router: Router,
+    private _fs: FacultadService,
+    private _as: AuthService) {
+    this.flagEditar = true;
     this.matSelected = null;
     this.newMat = false;
     this.newEst = false;
     this.flagSortByName = true;
     this.flagSortByDoc = true;
 
-    this._fs.getFacultades().subscribe(data=>{
+    this._fs.getFacultades().subscribe(data => {
       this.facultades = data;
     })
 
@@ -77,7 +78,7 @@ export class AsignaturasComponent implements OnInit {
   ngOnInit() {
   }
 
-  cargarMaterias(){
+  cargarMaterias() {
     this.perfil = this._as.obtenerSesion();
     this._ms.getMaterias(this.perfil.id_USUARIO).subscribe(data => {
       console.log(data);
@@ -103,12 +104,12 @@ export class AsignaturasComponent implements OnInit {
     }
   }
 
-  editarNotas(item:NgForm){
+  editarNotas(item: NgForm) {
 
 
-    if(this.flagEditar){
+    if (this.flagEditar) {
       this.flagEditar = false
-    }else{
+    } else {
       this.flagEditar = true;
     }
     console.log(item);
@@ -125,7 +126,7 @@ export class AsignaturasComponent implements OnInit {
 
     this._ms.guardarMAteria(mat).subscribe(data => {
       this.estado = <boolean>data;
-      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
+      new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
         this.cargarMaterias();
         formulario.reset();
         this.newMat = false;
@@ -137,49 +138,49 @@ export class AsignaturasComponent implements OnInit {
   }
 
   cargarEstudiantes(mat: any) {
-      this.students =[];
-      this.matSelected = mat
-      console.log(this.matSelected);
-      this._ms.getConcertacionMateria(this.matSelected.id_MATERIA).subscribe(data =>{
-        this.ConcertSelect =<any> data;
-        console.log(data);
-      });
-
-      console.log(this.matSelected);
-
-}
-
-CargarNotas(select:any){
-  if(select.value.id_concertacion === null){
-
-  }else{
-    console.log(select);
-    this.conSelect = select;
-    this._ms.getEstudianteMateria(this.matSelected.id_MATERIA, select.value).subscribe(data => {
-      this.students =<any> data;
-      this.studentsAux = this.students;
+    this.students = [];
+    this.matSelected = mat
+    console.log(this.matSelected);
+    this._ms.getConcertacionMateria(this.matSelected.id_MATERIA).subscribe(data => {
+      this.ConcertSelect = <any>data;
       console.log(data);
     });
+
+    console.log(this.matSelected);
+
   }
 
-}
+  CargarNotas(select: any) {
+    if (select.value.id_concertacion === null) {
 
-guardarRow(item:any){
-let nota:materia_est = new materia_est();
-nota.setDoc_estudiante(item.doc_estudiante);
-nota.setId_con(item.id_con);
-nota.setNota(item.nota);
-nota.setId_nota(item.id_nota);
-nota.setComentario(item.comentario);
+    } else {
+      console.log(select);
+      this.conSelect = select;
+      this._ms.getEstudianteMateria(this.matSelected.id_MATERIA, select.value).subscribe(data => {
+        this.students = <any>data;
+        this.studentsAux = this.students;
+        console.log(data);
+      });
+    }
 
-this._ms.setNota(nota).subscribe(data =>{
-  this.estado =<any> data;
-  new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
-      this.estado = null;
-  });
+  }
 
-})
-}
+  guardarRow(item: any) {
+    let nota: materia_est = new materia_est();
+    nota.setDoc_estudiante(item.doc_estudiante);
+    nota.setId_con(item.id_con);
+    nota.setNota(item.nota);
+    nota.setId_nota(item.id_nota);
+    nota.setComentario(item.comentario);
+
+    this._ms.setNota(nota).subscribe(data => {
+      this.estado = <any>data;
+      new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
+        this.estado = null;
+      });
+
+    })
+  }
 
   guardarEstudiante(formulario: NgForm) {
     let obj = new materia_est();
@@ -188,7 +189,7 @@ this._ms.setNota(nota).subscribe(data =>{
     obj.setId_materia(this.matSelected.id_MATERIA);
     this._ms.guardarEstudianteMateria(obj).subscribe(data => {
       this.estado = <boolean>data;
-      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
+      new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
         this.cargarEstudiantes(this.matSelected);
         formulario.reset();
         this.newEst = false;
@@ -199,12 +200,12 @@ this._ms.setNota(nota).subscribe(data =>{
 
   }
 
-  eliminarEst(est:any){
+  eliminarEst(est: any) {
 
-    this._ms.deleteEstudianteMateria(est.id_materia,est.doc_estudiante).subscribe(data=>{
+    this._ms.deleteEstudianteMateria(est.id_materia, est.doc_estudiante).subscribe(data => {
       this.estado = <boolean>data;
       this.estado = <boolean>data;
-      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
+      new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
         this.cargarEstudiantes(this.matSelected);
         this.estado = null;
       });
@@ -212,24 +213,24 @@ this._ms.setNota(nota).subscribe(data =>{
     console.log(est);
   }
 
-  eliminarMat(mat:any){
-    if(this.matSelected){
-      this._ms.deleteMateria(this.matSelected.id_MATERIA).subscribe(data =>{
+  eliminarMat(mat: any) {
+    if (this.matSelected) {
+      this._ms.deleteMateria(this.matSelected.id_MATERIA).subscribe(data => {
         this.estado = <boolean>data;
-        new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
+        new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
           this.cargarMaterias();
           this.newMat = false;
           this.newEst = false;
           this.estado = null;
-          this.matSelected=null;
+          this.matSelected = null;
         });
       });
     }
 
   }
 
-  setConcertacion(formulario:NgForm){
-    let con:Concertacion = new Concertacion();
+  setConcertacion(formulario: NgForm) {
+    let con: Concertacion = new Concertacion();
     con.setNom_concertacion(formulario.value.nombre);
     con.setValor_porcentual(formulario.value.valor);
     con.setId_materia(this.matSelected.id_MATERIA)
@@ -237,10 +238,10 @@ this._ms.setNota(nota).subscribe(data =>{
     con.setDoc_maestro(this.perfil.doc_USER);
     con.setId_usuario(this.matSelected.id_MAESTRO);
     console.log(con);
-    this._ms.guardarConcertacion(con).subscribe(data =>{
+    this._ms.guardarConcertacion(con).subscribe(data => {
       this.estadoCon = <boolean>data;
-      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
-        if(this.estadoCon){
+      new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
+        if (this.estadoCon) {
           formulario.reset();
           this.validarConcertacion();
           this.cargarEstudiantes(this.matSelected);
@@ -252,22 +253,22 @@ this._ms.setNota(nota).subscribe(data =>{
     });
   }
 
-  validarConcertacion(){
+  validarConcertacion() {
 
-    this._ms.getValorConcertado(this.matSelected.id_MATERIA).subscribe(data =>{
+    this._ms.getValorConcertado(this.matSelected.id_MATERIA).subscribe(data => {
       this.valorConcertado = data;
     });
   }
 
-  actualizarConcertacion(data:any){
-    let concertacion:Concertacion = new Concertacion();
+  actualizarConcertacion(data: any) {
+    let concertacion: Concertacion = new Concertacion();
     concertacion.setId_concertacion(data.id_concertacion);
     concertacion.setNom_concertacion(data.nom_concertacion);
     concertacion.setValor_porcentual(data.valor_porcentual);
-    this._ms.updateConcertacion(concertacion).subscribe(data =>{
-      this.estadoCon = <boolean> data;
+    this._ms.updateConcertacion(concertacion).subscribe(data => {
+      this.estadoCon = <boolean>data;
       console.log(data);
-      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
+      new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
         this.estadoCon = null;
         this.validarConcertacion();
         this.cargarEstudiantes(this.matSelected);
@@ -275,11 +276,11 @@ this._ms.setNota(nota).subscribe(data =>{
     });
   }
 
-  guardarTodos(students:any){
+  guardarTodos(students: any) {
 
-    this._ms.guardarNotas(students).subscribe(data =>{
-      this.estado =<boolean> data;
-      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
+    this._ms.guardarNotas(students).subscribe(data => {
+      this.estado = <boolean>data;
+      new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
         this.estado = null;
         this.CargarNotas(this.ConcertSelect);
       });
@@ -287,97 +288,111 @@ this._ms.setNota(nota).subscribe(data =>{
     });
   }
 
-  deleteConcertacion(data){
-    let obj:materia_est = new materia_est();
+  deleteConcertacion() {
+    let data = this.concertToDelente;
+    let obj: materia_est = new materia_est();
     obj.setId_con(data.id_concertacion);
     obj.setId_materia(this.matSelected.id_MATERIA);
     this._ms.deleteConcertacion(obj).subscribe(data => {
-      this.estadoCon = <boolean> data;
-      new Promise(resolve => setTimeout(()=>resolve(), 2000)).then(()=>{
+      this.estadoCon = <boolean>data;
+      new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
         this.estadoCon = null;
         this.validarConcertacion();
         this.cargarEstudiantes(this.matSelected);
+        this.concertToDelente = null;
       });
 
     });
   }
 
-  orderByname(students){
+  orderByname(students) {
 
-    if(this.flagSortByName){
-      this.students =  students.sort(function(a,b){
+    if (this.flagSortByName) {
+      this.students = students.sort(function(a, b) {
 
         if (a.nom_estudiante < b.nom_estudiante) {
-            return -1;
-          }
-          if (a.nom_estudiante > b.nom_estudiante ) {
-            return 1;
-          }
-          // a debe ser igual b
-          return 0;
-        });
-        this.flagSortByName = false;
-    }else{
-      this.students =  students.sort(function(a,b){
+          return -1;
+        }
+        if (a.nom_estudiante > b.nom_estudiante) {
+          return 1;
+        }
+        // a debe ser igual b
+        return 0;
+      });
+      this.flagSortByName = false;
+    } else {
+      this.students = students.sort(function(a, b) {
         if (a.nom_estudiante < b.nom_estudiante) {
-            return 1;
-          }
-          if (a.nom_estudiante > b.nom_estudiante ) {
-            return -1;
-          }
-          // a debe ser igual b
-          return 0;
-        });
-        this.flagSortByName=true;
+          return 1;
+        }
+        if (a.nom_estudiante > b.nom_estudiante) {
+          return -1;
+        }
+        // a debe ser igual b
+        return 0;
+      });
+      this.flagSortByName = true;
     }
   }
 
-  orderByDoc(students){
-    if(this.flagSortByDoc){
-      this.students =  students.sort(function(a,b){
+  orderByDoc(students) {
+    if (this.flagSortByDoc) {
+      this.students = students.sort(function(a, b) {
 
         if (a.doc_estudiante < b.doc_estudiante) {
-            return -1;
-          }
-          if (a.doc_estudiante > b.doc_estudiante ) {
-            return 1;
-          }
-          // a debe ser igual b
-          return 0;
-        });
-        this.flagSortByDoc = false;
-    }else{
-      this.students =  students.sort(function(a,b){
+          return -1;
+        }
+        if (a.doc_estudiante > b.doc_estudiante) {
+          return 1;
+        }
+        // a debe ser igual b
+        return 0;
+      });
+      this.flagSortByDoc = false;
+    } else {
+      this.students = students.sort(function(a, b) {
         if (a.doc_estudiante < b.doc_estudiante) {
-            return 1;
-          }
-          if (a.doc_estudiante > b.doc_estudiante ) {
-            return -1;
-          }
-          // a debe ser igual b
-          return 0;
-        });
-        this.flagSortByDoc=true;
-  }
-}
-
-searchEstudiante(buscar){
-  this.students = this.studentsAux;
-if(buscar !== ""){
-
-  let result = null;
-  result = this.studentsAux.find(word =>word.doc_estudiante === buscar);
-  console.log("Result: ", result);
-  if(result !== undefined){
-    this.students =[];
-    console.log("entro al if");
-    this.students.push(result);
+          return 1;
+        }
+        if (a.doc_estudiante > b.doc_estudiante) {
+          return -1;
+        }
+        // a debe ser igual b
+        return 0;
+      });
+      this.flagSortByDoc = true;
+    }
   }
 
+  searchEstudiante(buscar: string) {
+    this.students = this.studentsAux;
+    if (buscar !== "") {
+      let result = null;
+      result = this.studentsAux.find(word => word.doc_estudiante === buscar);
+      console.log("Result: ", result);
+      if (result !== undefined) {
+        this.students = [];
+        console.log("entro al if");
+        this.students.push(result);
+      }
 
-  console.log("el vector quedo:",this.students);
-}
+      if (this.students === this.studentsAux) {
+        let result = null;
+        result = this.studentsAux.find(word => word.nom_estudiante === buscar);
+        console.log("Result: ", result);
+        if (result !== undefined) {
+          this.students = [];
+          this.students.push(result);
+        }
+      }
 
 
+      console.log("el vector quedo:", this.students);
+    }
+  }
+
+
+asignarConcertacion(concertacion:any){
+  this.concertToDelente = concertacion;
 }
 }

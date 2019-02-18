@@ -10,21 +10,24 @@
 
   <div class="col-10 div-content">
 
-    <div class=" animated fadeIn fast content">
-
+    <div class="animated fadeIn fast content">
+      <h3>Materias</h3>
       <ul class="nav">
         <li (click)="cargarEstudiantes(materia)" #mat *ngFor="let materia of materias" style="margin-left:0.2%;">
-          <h5><span class="badge badge-dark main-color">{{materia.nombre_MATERIA}}</span></h5>
+          <h5><span class="badge badge-primary">{{materia.nombre_MATERIA}}</span></h5>
         </li>
+        <i (click)="openForm()" title="Añadir Materia" class="fas fa-plus-square fa-2x ml-3 istyle" style="color:#007bff"></i>
       </ul>
       <br>
-      <button (click)="openForm()" class="btn btn-outline-primary " type="button" name="button">Agregar Materia</button>
+
       <button *ngIf="matSelected" style="margin-left:1%;" (click)="openFormEst()" class="btn btn-outline-primary" type="button" name="button">Agregar Estudiante</button>
-      <button *ngIf="matSelected" type="button" style="margin-left:1%;" (click)="eliminarMat()" class="btn btn-outline-danger" name="button">Eliminar Materia</button>
+      <button *ngIf="matSelected" type="button" style="margin-left:1%;" data-toggle="modal" data-target="#ModalConfirmacion" class="btn btn-outline-danger" name="button">Eliminar Materia</button>
 
 
       <form *ngIf="newEst" #forma="ngForm" (ngSubmit)="guardarEstudiante(forma)">
         <br>
+        <h5>Registrar Estudiante</h5>
+
         <div class="form-row">
           <div class="form-group col-3">
             <label for="inputname">Documento</label>
@@ -49,6 +52,7 @@
 
       <form *ngIf="newMat" #forma="ngForm" (ngSubmit)="guardar(forma)">
         <br>
+        <h5>Registrar Materia</h5>
         <div class="form-row">
           <div class="form-group col-3">
             <label for="inputname">Codigo</label>
@@ -88,34 +92,34 @@
       <h3> <span class="badge badge-dark main-color"> Nombre: </span> {{matSelected.nombre_MATERIA}} </h3>
       <button (click)="validarConcertacion()" *ngIf="matSelected" data-toggle="modal" data-target="#exampleModal" type="button" style="margin-left:1%; margin-bottom:1%;" class="btn btn-outline-primary" name="button">Concertacion</button>
       <div class="col-2">
-      <input (keyup.enter)="searchEstudiante(buscar.value)" #buscar class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <input *ngIf="conSelect" (change)="searchEstudiante(buscar.value)" #buscar class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       </div>
       <div class="col-3">
-      <button *ngIf="conSelect" (click)="guardarTodos(students)" type="button"  class="btn btn-primary" style="margin-left:35%; margin-bottom:1%;" name="button"><i class="fas fa-save"></i> Guardar Todos</button>
-</div>
+        <button *ngIf="conSelect" (click)="guardarTodos(students)" type="button" class="btn btn-primary" style="margin-left:35%; margin-bottom:1%;" name="button"><i class="fas fa-save"></i> Guardar Todos</button>
+      </div>
     </div>
 
-    <div class="table-responsive-md">
-      <table class="table table-striped table-hover table-warning table-bordered ">
-        <thead class="thead-dark">
+    <div *ngIf="matSelected" class="table-responsive-md">
+      <table class="table table-striped table-hover table-light table-bordered ">
+        <thead class="bg-dark" style="color:white;  ">
           <tr>
             <th scope="col">#</th>
             <th (click)="orderByDoc(students)" class="point" scope="col">Documento <i *ngIf="flagSortByDoc" class="fas fa-caret-down"></i><i *ngIf="!flagSortByDoc" class="fas fa-caret-up"></i></th>
             <th (click)="orderByname(students)" class="point" scope="col">Nombre <i *ngIf="flagSortByName" class="fas fa-caret-down"></i> <i *ngIf="!flagSortByName" class="fas fa-caret-up"></i></th>
             <!--th *ngFor="let concertacion of ConcertSelect; let i = index" scope="col">{{concertacion.valor_porcentual}}% <br> ({{concertacion.nom_concertacion}})</th-->
-            <th>
-              <div *ngIf="ConcertSelect" class="container">
-                <select (click)="CargarNotas(SelectConcertacion)" [(ngModel)]="concertacion" name="SelectConcertacion" required #SelectConcertacion="ngModel" class="custom-select">
-                  <option default>Seleccione</option>
-                  <option *ngFor="let concertacion of ConcertSelect" [value]="concertacion.id_concertacion">{{concertacion.nom_concertacion}} {{concertacion.valor_porcentual}}%</option>
-                </select>
-              </div>
+            <th style="width:22%;">
+
+              <select (click)="CargarNotas(SelectConcertacion)" [(ngModel)]="concertacion" name="SelectConcertacion" required #SelectConcertacion="ngModel" class="custom-select">
+                <option>Seleccione</option>
+                <option selected="Seleccione" *ngFor="let concertacion of ConcertSelect" [value]="concertacion.id_concertacion">{{concertacion.nom_concertacion}} {{concertacion.valor_porcentual}}%</option>
+              </select>
+
             </th>
             <th>Comentarios</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="animated fadeIn fast">
           <tr *ngFor="let est of students; index as i ">
             <th scope="row">{{i + 1 }}</th>
             <td>{{est.doc_estudiante}}</td>
@@ -125,8 +129,7 @@
             </td>
             <td><textarea maxlength="100" [(ngModel)]="est.comentario" [value]="est.comentario" name="comentario" #comentario="ngModel" type="text" class="form-control"></textArea></td>
             <td>
-              <button (click)="guardarRow(est)" type="button" style="margin-left:5px;" class="btn btn-outline-primary" name="button"><i class="far fa-save"></i></button>
-              <button (click)="eliminarEst(est)" type="button" style="margin-left:5px;" class="btn btn-outline-danger" name="button"><i class="fas fa-trash-alt"></i></button>
+              <button (click)="guardarRow(est)" title="Guardar" type="button" style="margin-left:5px;" class="btn btn-outline-primary" name="button"><i class="far fa-save"></i></button>
             </td>
           </tr>
 
@@ -138,9 +141,9 @@
 </div>
 
 
-
+<!-->Modal Concertacion</!-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document" >
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Concertacion</h5>
@@ -174,8 +177,8 @@
           <button [disabled]="!formaCon.valid || valorConcertado === 100" type="submit" class="btn btn-outline-primary">Guardar</button>
         </form>
 
-  <br>
-  <h5>Concertacion</h5>
+        <br>
+        <h5>Concertacion</h5>
         <div class="table-responsive-md">
           <table class="table table-striped table-hover table-warning table-bordered">
             <thead class="thead-dark">
@@ -191,12 +194,16 @@
             <tbody>
               <tr *ngFor="let concertacion of ConcertSelect; index as i ">
                 <th scope="row">{{i + 1 }}</th>
-                <td><div><input class="form-control" [(ngModel)]="concertacion.nom_concertacion" nombre="valor" #nombre type="text" [value]="concertacion.nom_concertacion" ></div></td>
-                <td><div style="margin-left:35%;"><input class="form-control" [(ngModel)]="concertacion.valor_porcentual" name="valor" #valor type="text" [value]="concertacion.valor_porcentual" style="width:50px;"></div></td>
+                <td>
+                  <div><input class="form-control" [(ngModel)]="concertacion.nom_concertacion" nombre="valor" #nombre type="text" [value]="concertacion.nom_concertacion"></div>
+                </td>
+                <td>
+                  <div style="margin-left:35%;"><input class="form-control" [(ngModel)]="concertacion.valor_porcentual" name="valor" #valor type="text" [value]="concertacion.valor_porcentual" style="width:50px;"></div>
+                </td>
                 <td>
                   <button (click)="actualizarConcertacion(concertacion)" type="button" style="margin-left:5px;" class="btn btn-primary" name="button"><i class="far fa-save"></i></button>
-                  <button (click)="deleteConcertacion(concertacion)" type="button" style="margin-left:5px;" class="btn btn-danger" name="button"><i class="fas fa-trash-alt"></i></button>
-                  </td>
+                  <button (click)="asignarConcertacion(concertacion)" data-toggle="modal" data-target="#ModalConfirmacionDeleteConcertacion" type="button" style="margin-left:5px;" class="btn btn-danger" name="button"><i class="fas fa-trash-alt"></i></button>
+                </td>
               </tr>
 
             </tbody>
@@ -210,6 +217,52 @@
         </div>
         <div *ngIf="estadoCon === true" class="alert alert-success" role="alert">
           Accion aplicada exitosamente!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-->Modal Confirmacion Borrar Materia</!-->
+<div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div style="color:#721c24">
+          ¿Esta seguro de eliminar la materia?
+        </div>
+
+
+        <div style="color:#0c5460;">
+          Tenga en cuenta que todas las concertaciones y notas asociadas a esta materia seran eliminadas.
+        </div>
+        <br>
+        <div class="modal-footer">
+          <button *ngIf="matSelected" type="button" style="margin-left:1%;" (click)="eliminarMat()" data-dismiss="modal" class="btn btn-outline-danger" name="button">Si, Eliminar</button>
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No, Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-->Modal Confirmacion borrar Concertacion</!-->
+<div class="modal fade" id="ModalConfirmacionDeleteConcertacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div style="color:#721c24">
+          ¿Esta seguro de eliminar la Concertacion?
+        </div>
+
+
+        <div style="color:#0c5460;">
+          Tenga en cuenta que todas las notas asociadas a esta Concertacion seran eliminadas.
+        </div>
+        <br>
+        <div class="modal-footer">
+          <button type="button" (click)="deleteConcertacion()" style="margin-left:1%;" data-dismiss="modal" class="btn btn-outline-danger" name="button">Si, Eliminar</button>
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No, Cancelar</button>
         </div>
       </div>
     </div>
