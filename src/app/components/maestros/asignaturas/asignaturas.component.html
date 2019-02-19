@@ -3,7 +3,10 @@
     <app-navbar></app-navbar>
   </div>
 </header>
-<div class="row">
+
+
+
+<div class="row ">
   <div class="col-2">
     <app-sidebar></app-sidebar>
   </div>
@@ -11,73 +14,22 @@
   <div class="col-10 div-content">
 
     <div class="animated fadeIn fast content">
-      <h3>Materias</h3>
+      <h3>Gestion de Notas</h3>
       <ul class="nav">
         <li (click)="cargarEstudiantes(materia)" #mat *ngFor="let materia of materias" style="margin-left:0.2%;">
           <h5><span class="badge badge-primary">{{materia.nombre_MATERIA}}</span></h5>
         </li>
-        <i (click)="openForm()" title="Añadir Materia" class="fas fa-plus-square fa-2x ml-3 istyle" style="color:#007bff"></i>
-      </ul>
+        </ul>
       <br>
 
-      <button *ngIf="matSelected" style="margin-left:1%;" (click)="openFormEst()" class="btn btn-outline-primary" type="button" name="button">Agregar Estudiante</button>
-      <button *ngIf="matSelected" type="button" style="margin-left:1%;" data-toggle="modal" data-target="#ModalConfirmacion" class="btn btn-outline-danger" name="button">Eliminar Materia</button>
-
-
-      <form *ngIf="newEst" #forma="ngForm" (ngSubmit)="guardarEstudiante(forma)">
-        <br>
-        <h5>Registrar Estudiante</h5>
-
-        <div class="form-row">
-          <div class="form-group col-3">
-            <label for="inputname">Documento</label>
-            <input [(ngModel)]="materia.doc_estudiante" name="documento" required #documento="ngModel" type="text" class="form-control" id="inputname" placeholder="">
-          </div>
-        </div>
-
-
-        <div class="form-row">
-          <div class="form-group col-3">
-            <label for="inputname">Nombre Completo</label>
-            <input [(ngModel)]="materia.nom_estudiante" name="nombre" required #nombre="ngModel" type="text" class="form-control" id="inputname" placeholder="">
-          </div>
-
-        </div>
-
-
-        <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">Guardar</button>
-      </form>
 
 
 
-      <form *ngIf="newMat" #forma="ngForm" (ngSubmit)="guardar(forma)">
-        <br>
-        <h5>Registrar Materia</h5>
-        <div class="form-row">
-          <div class="form-group col-3">
-            <label for="inputname">Codigo</label>
-            <input [(ngModel)]="materia.codigo_materia" name="codigo" required #codigo="ngModel" type="text" class="form-control" id="inputname" placeholder="">
-          </div>
-        </div>
 
 
-        <div class="form-row">
-          <div class="form-group col-3">
-            <label for="inputname">Nombre</label>
-            <input [(ngModel)]="materia.nombre_materia" name="nombre" required #nombre="ngModel" type="text" class="form-control" id="inputname" placeholder="">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="inputlastname">Facultad</label>
-            <select [(ngModel)]="facultadSelected" name="facultad" required #facultad="ngModel" class="custom-select">
-              <option *ngFor="let fac of facultades" [value]="fac.id_FACULTAD">{{fac.nombre_FACULTAD}}</option>
-            </select>
-
-          </div>
-        </div>
 
 
-        <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">Guardar</button>
-      </form>
+
       <br>
       <br>
       <div *ngIf="estado === false" class="alert alert-danger" role="alert">
@@ -141,6 +93,7 @@
 </div>
 
 
+
 <!-->Modal Concertacion</!-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -201,8 +154,8 @@
                   <div style="margin-left:35%;"><input class="form-control" [(ngModel)]="concertacion.valor_porcentual" name="valor" #valor type="text" [value]="concertacion.valor_porcentual" style="width:50px;"></div>
                 </td>
                 <td>
-                  <button (click)="actualizarConcertacion(concertacion)" type="button" style="margin-left:5px;" class="btn btn-primary" name="button"><i class="far fa-save"></i></button>
-                  <button (click)="asignarConcertacion(concertacion)" data-toggle="modal" data-target="#ModalConfirmacionDeleteConcertacion" type="button" style="margin-left:5px;" class="btn btn-danger" name="button"><i class="fas fa-trash-alt"></i></button>
+                  <button title="Actualizar" (click)="actualizarConcertacion(concertacion)" type="button" style="margin-left:5px;" class="btn btn-primary" name="button"><i class="far fa-save"></i></button>
+                  <button title="Eliminar Concertacion" (click)="asignarConcertacion(concertacion)" data-toggle="modal" data-target="#ModalConfirmacionDeleteConcertacion" type="button" style="margin-left:5px;" class="btn btn-danger" name="button"><i class="fas fa-trash-alt"></i></button>
                 </td>
               </tr>
 
@@ -223,28 +176,7 @@
   </div>
 </div>
 
-<!-->Modal Confirmacion Borrar Materia</!-->
-<div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div style="color:#721c24">
-          ¿Esta seguro de eliminar la materia?
-        </div>
 
-
-        <div style="color:#0c5460;">
-          Tenga en cuenta que todas las concertaciones y notas asociadas a esta materia seran eliminadas.
-        </div>
-        <br>
-        <div class="modal-footer">
-          <button *ngIf="matSelected" type="button" style="margin-left:1%;" (click)="eliminarMat()" data-dismiss="modal" class="btn btn-outline-danger" name="button">Si, Eliminar</button>
-          <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No, Cancelar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-->Modal Confirmacion borrar Concertacion</!-->
 <div class="modal fade" id="ModalConfirmacionDeleteConcertacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

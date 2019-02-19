@@ -66,6 +66,8 @@ export class BarrasComponent implements OnInit {
 
   cargarGrafica(materia:any){
     this.barChartLabels =[];
+    this.aprobados = [];
+    this.reprobados = [];
 
 
     this._rs.getEstudianteMateria(materia.id_MATERIA).subscribe(data => {

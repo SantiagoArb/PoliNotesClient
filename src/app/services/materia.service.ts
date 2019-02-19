@@ -118,4 +118,18 @@ export class MateriaService {
     return this._http.get(`http://localhost:${PUERTO}/getcantest`, { params: Params }).pipe(map(data => data));
 
   }
+
+  getEstudiantePorMateria(idx: string) {
+    let Params = new HttpParams();
+
+    // Begin assigning parameters
+    Params = Params.append('idx', idx);
+    return this._http.get(`http://localhost:${PUERTO}/getallestudiantes`, { params: Params }).pipe(map(data => data));
+
+  }
+
+  deleteEstudiante(datos){
+    let usuarioJson = JSON.stringify(datos);
+    return this._http.post(`http://localhost:${PUERTO}/deleteestudiante`, usuarioJson).pipe(map(data => data));
+  }
 }

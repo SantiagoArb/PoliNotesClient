@@ -115,27 +115,7 @@ export class AsignaturasComponent implements OnInit {
     console.log(item);
   }
 
-  guardar(formulario: NgForm) {
-    this.perfil = this._as.obtenerSesion();
-    let mat: Materia = new Materia();
-    mat.setID_MATERIA("1");
-    mat.setCODIGO_MATERIA(formulario.value.codigo);
-    mat.setNOMBRE_MATERIA(formulario.value.nombre);
-    mat.setFACULTAD_MATERIA(this.facultadSelected);
-    mat.setID_MAESTRO(this.perfil.id_USUARIO);
 
-    this._ms.guardarMAteria(mat).subscribe(data => {
-      this.estado = <boolean>data;
-      new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
-        this.cargarMaterias();
-        formulario.reset();
-        this.newMat = false;
-        this.estado = null;
-      });
-
-
-    });
-  }
 
   cargarEstudiantes(mat: any) {
     this.students = [];
@@ -213,21 +193,7 @@ export class AsignaturasComponent implements OnInit {
     console.log(est);
   }
 
-  eliminarMat(mat: any) {
-    if (this.matSelected) {
-      this._ms.deleteMateria(this.matSelected.id_MATERIA).subscribe(data => {
-        this.estado = <boolean>data;
-        new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
-          this.cargarMaterias();
-          this.newMat = false;
-          this.newEst = false;
-          this.estado = null;
-          this.matSelected = null;
-        });
-      });
-    }
-
-  }
+  
 
   setConcertacion(formulario: NgForm) {
     let con: Concertacion = new Concertacion();

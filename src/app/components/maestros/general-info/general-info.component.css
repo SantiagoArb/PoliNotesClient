@@ -1,0 +1,15 @@
+span{
+  cursor:pointer;
+}
+.main-color{
+  background:#007bff;
+}
+
+.point:hover{
+  cursor:pointer;
+  color: #007bff;
+}
+
+.istyle{
+  cursor:pointer;
+}
