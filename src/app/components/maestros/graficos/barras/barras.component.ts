@@ -65,24 +65,29 @@ export class BarrasComponent implements OnInit {
   }
 
   cargarGrafica(materia:any){
+
     this.barChartLabels =[];
-    this.aprobados = [];
-    this.reprobados = [];
+
 
 
     this._rs.getEstudianteMateria(materia.id_MATERIA).subscribe(data => {
+
       let resultado:Array<Object> = <Array<Object>> data;
       console.log(data);
-      for(let i = 0; i<resultado.length;i++){
-        let value = <any> resultado[i];
-        this.barChartLabels.push(value.nombre_Con);
-        this.aprobados.push(value.aprovaron);
-        this.reprobados.push(value.reprovaron);
+
+      if(resultado.length !== 0){
+        for(let i = 0; i<resultado.length;i++){
+          let value = <any> resultado[i];
+          this.barChartLabels.push(value.nombre_Con);
+          this.aprobados.unshift(value.aprovaron);
+          this.reprobados.unshift(value.reprovaron);
+        }
       }
 
-console.log("labels:",this.barChartLabels);
-console.log("aprobados:",this.aprobados);
-console.log("reprobados:",this.reprobados);
+
+      console.log("labels:",this.barChartLabels);
+      console.log("aprobados:",this.aprobados);
+      console.log("reprobados:",this.reprobados);
     });
 
     this.matSelected = materia;
