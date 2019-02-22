@@ -10,6 +10,48 @@ import { MateriaService } from 'src/app/services/materia.service';
   styleUrls: ['./donas.component.css']
 })
 export class DonasComponent {
+
+  public pieChartColors:Array<any> = [
+     { // grey
+       backgroundColor: 'rgb(46, 39, 247)',
+       borderColor: 'rgba(148,159,177,1)',
+       pointBackgroundColor: 'rgba(148,159,177,1)',
+       pointBorderColor: '#fff',
+       pointHoverBackgroundColor: '#fff',
+       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+     },
+     { // dark grey
+       backgroundColor: 'rgb(255, 63, 63)',
+       borderColor: 'rgba(77,83,96,1)',
+       pointBackgroundColor: 'rgba(77,83,96,1)',
+       pointBorderColor: '#fff',
+       pointHoverBackgroundColor: '#fff',
+       pointHoverBorderColor: 'rgba(77,83,96,1)'
+     },{ // dark grey
+       backgroundColor: 'rgb(61, 247, 241)',
+       borderColor: 'rgba(77,83,96,1)',
+       pointBackgroundColor: 'rgba(77,83,96,1)',
+       pointBorderColor: '#fff',
+       pointHoverBackgroundColor: '#fff',
+       pointHoverBorderColor: 'rgba(77,83,96,1)'
+     },
+     { // dark grey
+       backgroundColor: 'rgb(61, 247, 73)',
+       borderColor: 'rgba(77,83,96,1)',
+       pointBackgroundColor: 'rgba(77,83,96,1)',
+       pointBorderColor: '#fff',
+       pointHoverBackgroundColor: '#fff',
+       pointHoverBorderColor: 'rgba(77,83,96,1)'
+     },{ // dark grey
+       backgroundColor: 'rgb(206, 247, 61)',
+       borderColor: 'rgba(77,83,96,1)',
+       pointBackgroundColor: 'rgba(77,83,96,1)',
+       pointBorderColor: '#fff',
+       pointHoverBackgroundColor: '#fff',
+       pointHoverBorderColor: 'rgba(77,83,96,1)'
+     }
+
+   ];
   public pieChartLabels:string[] = [];
  public pieChartData:number[] = [];
  public pieChartType:string = 'pie';
@@ -36,22 +78,31 @@ export class DonasComponent {
   }
 
   cargarGrafica(materia:any){
-    this.pieChartLabels =[];
-    this.pieChartData = [];
+
 
     this._rs.getEstudianteMateria(materia.id_MATERIA).subscribe(data => {
+      this.pieChartLabels =[];
+      this.pieChartData=[];
       let resultado:Array<Object> = <Array<Object>> data;
       console.log(data);
       for(let i = 0; i<resultado.length;i++){
         let value = <any> resultado[i];
-        this.pieChartLabels.push(value.nombre_Con);
-        this.pieChartData.push(value.aprovaron);
+        this.pieChartLabels.unshift(value.nombre_Con);
+        this.pieChartData.unshift(value.aprovaron);
+      }
+
+      if(this.pieChartLabels.length === 0 ){
+        console.log("es void");
+        this.matSelected = false;
+      }else{
+        this.matSelected = materia;
       }
       console.log(this.pieChartLabels);
       console.log(this.pieChartData);
+
     });
 
-    this.matSelected = materia;
+
   }
 
 

@@ -11,13 +11,13 @@
     <li title="Añate tus materias y registra estudiantes en ellas." *ngIf="tperfil === 'maestro'" routerLinkActive="active" class="nav-item">
       <a class="nav-link" routerLink="/infomaterias">
         <i class="fas fa-address-book"></i>
-        <span class="menu-title">Gestion de Materias</span>
+        <span class="menu-title">Gestión de Materias</span>
       </a>
     </li>
     <li title="Añade concertaciones y asigna notas a tus estudiantes." *ngIf="tperfil === 'maestro'" routerLinkActive="active" class="nav-item">
       <a class="nav-link" routerLink="/materias">
         <i class="fas fa-book"></i>
-        <span class="menu-title">Gestion de Notas</span>
+        <span class="menu-title">Gestión de Notas</span>
       </a>
     </li>
     <li *ngIf="tperfil === 'estudiante'" routerLinkActive="active" class="nav-item">
@@ -41,7 +41,7 @@
     <li *ngIf="flagSubmenu" routerLinkActive="active" class="nav-item nav-submenu">
       <a class="nav-link" routerLink="/grafica/donas">
         <i class="fas fa-book"></i>
-        <span class="menu-title">Donas</span>
+        <span class="menu-title">Circular</span>
       </a>
     </li>
   </ul>

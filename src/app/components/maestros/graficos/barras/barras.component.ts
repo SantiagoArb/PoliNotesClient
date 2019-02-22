@@ -35,7 +35,7 @@ export class BarrasComponent implements OnInit {
   ];
   perfil: any;
   materias: any = [];
-  matSelected:any;
+  matSelected:any = null;
   public barChartLabels:string[]=[];
   public barChartType:string = 'bar';
   public barChartLegend:boolean = true;
@@ -46,6 +46,7 @@ export class BarrasComponent implements OnInit {
               private _as:AuthService,
               private router: Router,
             private _ms: MateriaService) {
+              console.log(this.matSelected);
     if (!this._as.obtenerSesion()) {
       this.router.navigate(['/login']);
     } else {
@@ -65,9 +66,10 @@ export class BarrasComponent implements OnInit {
   }
 
   cargarGrafica(materia:any){
-
+    this.matSelected = null;
     this.barChartLabels =[];
-
+    this.aprobados.unshift(0);
+    this.reprobados.unshift(0);
 
 
     this._rs.getEstudianteMateria(materia.id_MATERIA).subscribe(data => {
@@ -83,14 +85,19 @@ export class BarrasComponent implements OnInit {
           this.reprobados.unshift(value.reprovaron);
         }
       }
-
+      if(this.barChartLabels.length === 0 ){
+        console.log("es void");
+        this.matSelected = false;
+      }else{
+        this.matSelected = materia;
+      }
 
       console.log("labels:",this.barChartLabels);
       console.log("aprobados:",this.aprobados);
       console.log("reprobados:",this.reprobados);
     });
 
-    this.matSelected = materia;
+
   }
 
   public barChartData:any[] = [

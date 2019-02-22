@@ -88,7 +88,7 @@ estToDelente:any;
 
      this._fs.getFacultades().subscribe(data => {
        this.facultades = data;
-     })
+     });
 
      this._ms.guardarMAteria(mat).subscribe(data => {
        this.estado = <boolean>data;
@@ -132,7 +132,7 @@ estToDelente:any;
      this.perfil = this._as.obtenerSesion();
      this._ms.getMaterias(this.perfil.id_USUARIO).subscribe(data => {
        this.materias = data;
-     })
+     });
    }
 
   ngOnInit() {

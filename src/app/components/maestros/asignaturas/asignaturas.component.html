@@ -14,7 +14,7 @@
   <div class="col-10 div-content">
 
     <div class="animated fadeIn fast content">
-      <h3>Gestion de Notas</h3>
+      <h3>Gestión de Notas</h3>
       <ul class="nav">
         <li (click)="cargarEstudiantes(materia)" #mat *ngFor="let materia of materias" style="margin-left:0.2%;">
           <h5><span class="badge badge-primary">{{materia.nombre_MATERIA}}</span></h5>
@@ -22,21 +22,14 @@
         </ul>
       <br>
 
-
-
-
-
-
-
-
-
-      <br>
-      <br>
       <div *ngIf="estado === false" class="alert alert-danger" role="alert">
         Ocurrio un error con la ejecucion de la accion.
       </div>
       <div *ngIf="estado === true" class="alert alert-success" role="alert">
         Accion aplicada exitosamente!
+      </div>
+      <div *ngIf="ConcertSelect.length === 0 && matSelected" class="alert alert-danger mt-3" role="alert">
+        No se encuentran concertaciones registradas en esta materia. Para registrar haga click en el boton <span class="alert-link"> Concertacion. </span>
       </div>
     </div>
     <div *ngIf="matSelected" class="row" style="margin-left:0.2%;">

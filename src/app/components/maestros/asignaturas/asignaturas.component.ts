@@ -42,7 +42,7 @@ export class AsignaturasComponent implements OnInit {
   facultades: any = [];
   facultadSelected: any;
   estadoCon: boolean;
-  ConcertSelect: any;
+  ConcertSelect: any = [];
   conSelect: any;
   valorConcertado: any;
   concertacion: IConcertacion = {
@@ -81,7 +81,6 @@ export class AsignaturasComponent implements OnInit {
   cargarMaterias() {
     this.perfil = this._as.obtenerSesion();
     this._ms.getMaterias(this.perfil.id_USUARIO).subscribe(data => {
-      console.log(data);
       this.materias = data;
     })
   }
@@ -112,7 +111,6 @@ export class AsignaturasComponent implements OnInit {
     } else {
       this.flagEditar = true;
     }
-    console.log(item);
   }
 
 
@@ -120,27 +118,26 @@ export class AsignaturasComponent implements OnInit {
   cargarEstudiantes(mat: any) {
     this.students = [];
     this.matSelected = mat
-    console.log(this.matSelected);
     this._ms.getConcertacionMateria(this.matSelected.id_MATERIA).subscribe(data => {
       this.ConcertSelect = <any>data;
-      console.log(data);
     });
-
-    console.log(this.matSelected);
 
   }
 
   CargarNotas(select: any) {
     if (select.value.id_concertacion === null) {
-
+        this.conSelect = null;
     } else {
-      console.log(select);
-      this.conSelect = select;
-      this._ms.getEstudianteMateria(this.matSelected.id_MATERIA, select.value).subscribe(data => {
-        this.students = <any>data;
-        this.studentsAux = this.students;
-        console.log(data);
-      });
+      if(select.value === "Seleccione"){
+        this.conSelect = null;
+      }else{
+        this.conSelect = select;
+        this._ms.getEstudianteMateria(this.matSelected.id_MATERIA, select.value).subscribe(data => {
+          this.students = <any>data;
+          this.studentsAux = this.students;
+        });
+      }
+
     }
 
   }
@@ -190,10 +187,9 @@ export class AsignaturasComponent implements OnInit {
         this.estado = null;
       });
     })
-    console.log(est);
   }
 
-  
+
 
   setConcertacion(formulario: NgForm) {
     let con: Concertacion = new Concertacion();
@@ -203,7 +199,6 @@ export class AsignaturasComponent implements OnInit {
     this.perfil = this._as.obtenerSesion();
     con.setDoc_maestro(this.perfil.doc_USER);
     con.setId_usuario(this.matSelected.id_MAESTRO);
-    console.log(con);
     this._ms.guardarConcertacion(con).subscribe(data => {
       this.estadoCon = <boolean>data;
       new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
@@ -233,7 +228,6 @@ export class AsignaturasComponent implements OnInit {
     concertacion.setValor_porcentual(data.valor_porcentual);
     this._ms.updateConcertacion(concertacion).subscribe(data => {
       this.estadoCon = <boolean>data;
-      console.log(data);
       new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
         this.estadoCon = null;
         this.validarConcertacion();
@@ -250,7 +244,6 @@ export class AsignaturasComponent implements OnInit {
         this.estado = null;
         this.CargarNotas(this.ConcertSelect);
       });
-      console.log(data);
     });
   }
 
@@ -335,25 +328,19 @@ export class AsignaturasComponent implements OnInit {
     if (buscar !== "") {
       let result = null;
       result = this.studentsAux.find(word => word.doc_estudiante === buscar);
-      console.log("Result: ", result);
       if (result !== undefined) {
         this.students = [];
-        console.log("entro al if");
         this.students.push(result);
       }
 
       if (this.students === this.studentsAux) {
         let result = null;
         result = this.studentsAux.find(word => word.nom_estudiante === buscar);
-        console.log("Result: ", result);
         if (result !== undefined) {
           this.students = [];
           this.students.push(result);
         }
       }
-
-
-      console.log("el vector quedo:", this.students);
     }
   }
 
