@@ -15,8 +15,9 @@ export class EstudianteComponent implements OnInit {
   materias:any=[];
   matSelected:any;
   students:any=[];
-  ConcertSelect:any;
+  ConcertSelect:any=[];
   comentario:string;
+  noNotas= false;
   constructor(private _us:UsuarioService,
               private router:Router,
             private _ms: MateriaService,
@@ -46,6 +47,7 @@ this._us.getMisMaterias(this.perfil.doc_USER).subscribe(data=>{
 }
 
 CargarNotas(mat){
+  this.noNotas = false;
 
   let datos = new materia_est();
   datos.setId_materia(mat.id_materia);
@@ -55,6 +57,9 @@ CargarNotas(mat){
   console.log(datos);
   this._ms.getMisNotas(datos).subscribe(data=>{
     this.ConcertSelect = <any> data;
+    if(this.ConcertSelect.length === 0){
+      this.noNotas = true;
+    }
     console.log(data);
   });
 

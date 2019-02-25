@@ -9,7 +9,7 @@ span{
   background: black;
   opacity: 0.1;
 }
-td:hover{
+.column-hover:hover{
   background: white;
   opacity: 0.3;
 }

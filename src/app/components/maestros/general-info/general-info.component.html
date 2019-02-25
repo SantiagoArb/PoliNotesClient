@@ -29,9 +29,11 @@
       <div *ngIf="estado === true" class="alert alert-success mt-3" role="alert">
         Accion aplicada exitosamente!
       </div>
-      <div *ngIf="students.length === 0 && matSelected" class="alert alert-danger mt-3" role="alert">
+      <div *ngIf="noStudents && matSelected" class="alert alert-danger mt-3" role="alert">
         No se encuentran estudiantes registrados en esta materia. Para registrar haga click en el boton <span class="alert-link"> Agregar Estudiante. </span>
       </div>
+
+
     </div>
 
     <form *ngIf="newEst" #forma="ngForm" (ngSubmit)="guardarEstudiante(forma)">
@@ -86,6 +88,10 @@
       <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">Guardar</button>
     </form>
     <br>
+    <div *ngIf="matSelected" class="row mt-3" style="margin-left:0.2%;">
+      <h3><span class="badge badge-dark main-color">Codigo: </span> {{matSelected.codigo_MATERIA}}&nbsp;</h3>
+      <h3> <span class="badge badge-dark main-color"> Nombre: </span> {{matSelected.nombre_MATERIA}} </h3>
+      </div>
     <div *ngIf="matSelected" class="table-responsive-md">
       <table class="table table-striped table-hover table-light table-bordered ">
         <thead class="bg-dark" style="color:white;  ">
@@ -103,7 +109,6 @@
             <td>{{est.nom_estudiante}}</td>
             <td><button (click)="asignarEstudiante(est)" title="Borrar Estudiante" data-toggle="modal" data-target="#ModalConfirmacionEstudiante" type="button" style="margin-left:5px;" class="btn btn-danger" name="button"><i class="fas fa-trash-alt"></i></button></td>
           </tr>
-
         </tbody>
       </table>
     </div>

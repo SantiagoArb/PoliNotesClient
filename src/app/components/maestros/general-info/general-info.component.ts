@@ -33,6 +33,7 @@ estToDelente:any;
   matSelected: any = [];
   estudiantes: any[];
   students: any = [];
+  noStudents:any;
   studentsAux: any = [];
   flagEditar: boolean;
   facultades: any = [];
@@ -61,7 +62,7 @@ estToDelente:any;
                 } else {
                   this.perfil= this._as.obtenerSesion();
                   this._ms.getCantidadEstudiantes(this.perfil.id_USUARIO).subscribe(data =>{
-
+                    console.log(data);
                     this.materias = data;
                   });
                 }
@@ -120,10 +121,21 @@ estToDelente:any;
    }
 
    cargarEstudiantes(mat: any) {
+     console.log("materi", mat);
+     this.noStudents =false;
      this.students = [];
      this.matSelected = mat
+     console.log(this.matSelected.id_materia);
      this._ms.getEstudiantePorMateria(this.matSelected.id_materia).subscribe(data => {
-       this.students = <any>data;
+         this.students = <any>data;
+
+
+       if(this.students.length === 0){
+          this.noStudents=true;
+       }else{
+         this.noStudents = false;
+       }
+
      });
 
    }
@@ -132,6 +144,7 @@ estToDelente:any;
      this.perfil = this._as.obtenerSesion();
      this._ms.getMaterias(this.perfil.id_USUARIO).subscribe(data => {
        this.materias = data;
+       console.log("Materias",data);
      });
    }
 
