@@ -45,6 +45,7 @@ export class AsignaturasComponent implements OnInit {
   conSelect: any;
   concertacionActual:any;
   valorConcertado: any;
+  fullConcertado = false;
   concertacion: IConcertacion = {
     id_concertacion: null,
     nom_concertacion: null,
@@ -200,6 +201,9 @@ export class AsignaturasComponent implements OnInit {
     this.perfil = this._as.obtenerSesion();
     con.setDoc_maestro(this.perfil.doc_USER);
     con.setId_usuario(this.matSelected.id_MAESTRO);
+
+
+
     this._ms.guardarConcertacion(con).subscribe(data => {
       this.estadoCon = <boolean>data;
       new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
@@ -213,6 +217,7 @@ export class AsignaturasComponent implements OnInit {
 
 
     });
+
   }
 
   validarConcertacion() {
@@ -220,6 +225,27 @@ export class AsignaturasComponent implements OnInit {
     this._ms.getValorConcertado(this.matSelected.id_MATERIA).subscribe(data => {
       this.valorConcertado = data;
     });
+  }
+
+  ValidarFullConcertacion(formulario: NgForm){
+    let post:number = parseInt(this.valorConcertado) + parseInt(formulario.value.valor);
+    if(post > 100){
+      this.fullConcertado = true;
+    }else{
+      this.fullConcertado = false
+      this.setConcertacion(formulario);
+    }
+  }
+
+  ValidarFullConcertacionUpdate(data: any){
+    let post:number = parseInt(this.valorConcertado) + parseInt(data.valor_porcentual);
+    if(post > 100){
+      this.fullConcertado = true;
+
+    }else{
+      this.fullConcertado = false
+      this.actualizarConcertacion(data);
+    }
   }
 
   actualizarConcertacion(data: any) {

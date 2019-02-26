@@ -105,7 +105,7 @@
       </div>
       <div class="modal-body">
         <p style="color:red">Concertado: {{valorConcertado}}%</p>
-        <form #formaCon="ngForm" (ngSubmit)="setConcertacion(formaCon)">
+        <form #formaCon="ngForm" (ngSubmit)="ValidarFullConcertacion(formaCon)">
           <br>
           <div class="form-row">
             <div class="form-group">
@@ -120,13 +120,13 @@
               <label for="inputname">Valor Porcentual</label>
               <input [(ngModel)]="concertacion.porcentaje" name="valor" required #valor="ngModel" type="text" class="form-control" id="inputname" placeholder="10, 20, 25 etc">
             </div>
-
           </div>
 
-
-          <button [disabled]="!formaCon.valid || valorConcertado === 100" type="submit" class="btn btn-outline-primary">Guardar</button>
+          <button [disabled]="!formaCon.valid || valorConcertado + valor >= 100" type="submit" class="btn btn-outline-primary">Guardar</button>
         </form>
-
+        <div *ngIf="fullConcertado" class="alert alert-danger mt-3" role="alert">
+          La suma total de la concertacion debe ser menor o igual al 100%
+        </div>
         <br>
         <h5>Concertacion</h5>
         <div class="table-responsive-md">
@@ -151,7 +151,7 @@
                   <div style="margin-left:35%;"><input class="form-control" [(ngModel)]="concertacion.valor_porcentual" name="valor" #valor type="text" [value]="concertacion.valor_porcentual" style="width:50px;"></div>
                 </td>
                 <td>
-                  <button title="Actualizar" (click)="actualizarConcertacion(concertacion)" type="button" style="margin-left:5px;" class="btn btn-primary" name="button"><i class="far fa-save"></i></button>
+                  <button title="Actualizar" (click)="ValidarFullConcertacionUpdate(concertacion)" type="button" style="margin-left:5px;" class="btn btn-primary" name="button"><i class="far fa-save"></i></button>
                   <button title="Eliminar Concertacion" (click)="asignarConcertacion(concertacion)" data-toggle="modal" data-target="#ModalConfirmacionDeleteConcertacion" type="button" style="margin-left:5px;" class="btn btn-danger" name="button"><i
                       class="fas fa-trash-alt"></i></button>
                 </td>
