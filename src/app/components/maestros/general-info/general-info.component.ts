@@ -62,7 +62,7 @@ estToDelente:any;
                 } else {
                   this.perfil= this._as.obtenerSesion();
                   this._ms.getCantidadEstudiantes(this.perfil.id_USUARIO).subscribe(data =>{
-                    console.log(data);
+
                     this.materias = data;
                   });
                 }
@@ -124,8 +124,7 @@ estToDelente:any;
      console.log("materi", mat);
      this.noStudents =false;
      this.students = [];
-     this.matSelected = mat
-     console.log(this.matSelected.id_materia);
+     this.matSelected = mat;
      this._ms.getEstudiantePorMateria(this.matSelected.id_materia).subscribe(data => {
          this.students = <any>data;
 

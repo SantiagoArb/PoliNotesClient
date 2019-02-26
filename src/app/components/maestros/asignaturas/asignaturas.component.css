@@ -4,6 +4,12 @@ span{
 .main-color{
   background:#007bff;
 }
+table th {
+  text-align: center;
+}
+table td {
+  text-align: center;
+}
 
 .point:hover{
   cursor:pointer;

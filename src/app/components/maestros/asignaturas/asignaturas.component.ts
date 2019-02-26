@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Imateria } from 'src/app/Interfaces/materia.interface';
 import { NgForm } from '@angular/forms';
 import { MateriaService } from 'src/app/services/materia.service';
-import { Materia } from 'src/app/clases/materia.clase';
 import { Router } from '@angular/router';
 import { materia_est } from 'src/app/clases/materia_est.clase';
 import { FacultadService } from 'src/app/services/facultad.service';
@@ -44,6 +43,7 @@ export class AsignaturasComponent implements OnInit {
   estadoCon: boolean;
   ConcertSelect: any = [];
   conSelect: any;
+  concertacionActual:any;
   valorConcertado: any;
   concertacion: IConcertacion = {
     id_concertacion: null,
@@ -124,7 +124,8 @@ export class AsignaturasComponent implements OnInit {
 
   }
 
-  CargarNotas(select: any) {
+  CargarNotas(select: any, slc?:any) {
+    this.concertacionActual = select;
     if (select.value.id_concertacion === null) {
         this.conSelect = null;
     } else {
