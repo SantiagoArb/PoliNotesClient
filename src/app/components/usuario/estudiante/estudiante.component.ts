@@ -42,7 +42,6 @@ cargarMisMaterias(){
     this.perfil = this._as.obtenerSesion();
 this._us.getMisMaterias(this.perfil.doc_USER).subscribe(data=>{
   this.materias = data;
-  console.log(data);
 });
 }
 
@@ -54,20 +53,17 @@ CargarNotas(mat){
   datos.setDoc_estudiante(this.perfil.doc_USER);
   this.students =[];
   this.matSelected = mat
-  console.log(datos);
   this._ms.getMisNotas(datos).subscribe(data=>{
     this.ConcertSelect = <any> data;
     if(this.ConcertSelect.length === 0){
       this.noNotas = true;
     }
-    console.log(data);
   });
 
 }
 
 cargarComentario(nota){
   this.comentario = nota.comentario;
-  console.log(nota);
 }
 
 }

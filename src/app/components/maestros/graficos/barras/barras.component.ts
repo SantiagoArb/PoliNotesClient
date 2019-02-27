@@ -46,7 +46,6 @@ export class BarrasComponent implements OnInit {
               private _as:AuthService,
               private router: Router,
             private _ms: MateriaService) {
-              console.log(this.matSelected);
     if (!this._as.obtenerSesion()) {
       this.router.navigate(['/login']);
     } else {
@@ -60,7 +59,6 @@ export class BarrasComponent implements OnInit {
   cargarMaterias(){
     this.perfil = this._as.obtenerSesion();
     this._ms.getMaterias(this.perfil.id_USUARIO).subscribe(data => {
-      console.log(data);
       this.materias = data;
     })
   }
@@ -75,7 +73,6 @@ export class BarrasComponent implements OnInit {
     this._rs.getEstudianteMateria(materia.id_MATERIA).subscribe(data => {
 
       let resultado:Array<Object> = <Array<Object>> data;
-      console.log(data);
 
       if(resultado.length !== 0){
         for(let i = 0; i<resultado.length;i++){
@@ -86,15 +83,10 @@ export class BarrasComponent implements OnInit {
         }
       }
       if(this.barChartLabels.length === 0 ){
-        console.log("es void");
         this.matSelected = false;
       }else{
         this.matSelected = materia;
       }
-
-      console.log("labels:",this.barChartLabels);
-      console.log("aprobados:",this.aprobados);
-      console.log("reprobados:",this.reprobados);
     });
 
 

@@ -72,7 +72,6 @@ export class DonasComponent {
   cargarMaterias(){
     this.perfil = this._as.obtenerSesion();
     this._ms.getMaterias(this.perfil.id_USUARIO).subscribe(data => {
-      console.log(data);
       this.materias = data;
     })
   }
@@ -84,7 +83,6 @@ export class DonasComponent {
       this.pieChartLabels =[];
       this.pieChartData=[];
       let resultado:Array<Object> = <Array<Object>> data;
-      console.log(data);
       for(let i = 0; i<resultado.length;i++){
         let value = <any> resultado[i];
         this.pieChartLabels.unshift(value.nombre_Con);
@@ -92,13 +90,10 @@ export class DonasComponent {
       }
 
       if(this.pieChartLabels.length === 0 ){
-        console.log("es void");
         this.matSelected = false;
       }else{
         this.matSelected = materia;
       }
-      console.log(this.pieChartLabels);
-      console.log(this.pieChartData);
 
     });
 

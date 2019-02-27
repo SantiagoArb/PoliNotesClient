@@ -28,7 +28,6 @@ export class RegistroComponent implements OnInit {
     private root: Router) {
       this._us.getPerfiles().subscribe(data=>{
         this.perfiles = data;
-        console.log(this.perfiles);
       })
     }
   registro: string = "";
@@ -62,7 +61,6 @@ export class RegistroComponent implements OnInit {
     user.setCorreo_user(forma.value.email);
     user.setPassword_user(forma.value.pass);
     user.setId_perfil_user(forma.value.perfil);
-    console.log(user);
     this._us.Registrar(user).subscribe(data => {
       if (data) {
         let ruta = this.root;
@@ -73,7 +71,6 @@ export class RegistroComponent implements OnInit {
         this.registro = "error";
 
       }
-      console.log(data)
     });
 
   }

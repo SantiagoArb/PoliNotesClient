@@ -1,5 +1,7 @@
-<div class="main-container">
+<div class="main-container fadeIn fast">
+  <div >
   <form #forma="ngForm" (ngSubmit)="guardar( forma)">
+
     <div *ngIf="confirmError" class="alert alert-danger" role="alert">
       {{mensaje}}
     </div>
@@ -102,8 +104,9 @@
 
     <div class="form-group row" style="margin-left: 20px;">
       <label class="col-3 col-form-label">Perfil</label>
-      <div class="col-6">
+      <div style="width:262px;">
         <select [(ngModel)]="perfiles.nombre_TIPO_PERFIL" name="perfil" required #facultad="ngModel" class="custom-select">
+          <option>Seleccioné</option>
           <option *ngFor="let perfil of perfiles" [value]="perfil.id_TIPO_PERFIL">{{perfil.nombre_TIPO_PERFIL}}</option>
         </select>
       </div>
@@ -120,5 +123,6 @@
   </div>
   <div *ngIf="registro === 'ok'" class="alert alert-success" role="alert">
     Usuario registrado exitosamente...Redireccionando...
+  </div>
   </div>
 </div>

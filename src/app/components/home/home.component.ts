@@ -14,7 +14,6 @@ estudiante = false;
 
     if(!this._as.obtenerSesion()){
       this.router.navigate(['/login']);
-      console.log("no hay session");
     }
   }
 
