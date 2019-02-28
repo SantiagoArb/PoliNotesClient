@@ -25,7 +25,7 @@ export class AsignaturasComponent implements OnInit {
     doc_estudiante: null,
     nom_estudiante: null
   }
-  concertToDelente:any;
+  concertToDelente: any;
   flagSortByName: boolean;
   flagSortByDoc: boolean;
   newMat: boolean;
@@ -43,9 +43,10 @@ export class AsignaturasComponent implements OnInit {
   estadoCon: boolean;
   ConcertSelect: any = [];
   conSelect: any;
-  concertacionActual:any;
+  concertacionActual: any;
   valorConcertado: any;
   fullConcertado = false;
+  verDef = false;
   concertacion: IConcertacion = {
     id_concertacion: null,
     nom_concertacion: null,
@@ -125,23 +126,32 @@ export class AsignaturasComponent implements OnInit {
 
   }
 
-  CargarNotas(select: any, slc?:any) {
+  CargarNotas(select: any, slc?: any) {
     this.concertacionActual = select;
     if (select.value.id_concertacion === null) {
-        this.conSelect = null;
+      this.conSelect = null;
     } else {
-      if(select.value === "Seleccione"){
+      if (select.value === "Seleccione") {
         this.conSelect = null;
-      }else{
+      } else {
         this.conSelect = select;
         this._ms.getEstudianteMateria(this.matSelected.id_MATERIA, select.value).subscribe(data => {
           this.students = <any>data;
+          console.log(data);
           this.studentsAux = this.students;
         });
       }
 
     }
 
+  }
+
+  calcularDef() {
+    if (this.verDef) {
+      this.verDef = false;
+    } else {
+      this.verDef = true;
+    }
   }
 
   guardarRow(item: any) {
@@ -155,6 +165,7 @@ export class AsignaturasComponent implements OnInit {
     this._ms.setNota(nota).subscribe(data => {
       this.estado = <any>data;
       new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
+        this.cargarEstudiantes(this.matSelected);
         this.estado = null;
       });
 
@@ -218,7 +229,7 @@ export class AsignaturasComponent implements OnInit {
 
     });
 
-  }
+  };
 
   validarConcertacion() {
 
@@ -227,22 +238,22 @@ export class AsignaturasComponent implements OnInit {
     });
   }
 
-  ValidarFullConcertacion(formulario: NgForm){
-    let post:number = parseInt(this.valorConcertado) + parseInt(formulario.value.valor);
-    if(post > 100){
+  ValidarFullConcertacion(formulario: NgForm) {
+    let post: number = parseInt(this.valorConcertado) + parseInt(formulario.value.valor);
+    if (post > 100) {
       this.fullConcertado = true;
-    }else{
+    } else {
       this.fullConcertado = false
       this.setConcertacion(formulario);
     }
   }
 
-  ValidarFullConcertacionUpdate(data: any){
-    let post:number = parseInt(this.valorConcertado) + parseInt(data.valor_porcentual);
-    if(post > 100){
+  ValidarFullConcertacionUpdate(data: any) {
+    let post: number = parseInt(this.valorConcertado) + parseInt(data.valor_porcentual);
+    if (post > 100) {
       this.fullConcertado = true;
 
-    }else{
+    } else {
       this.fullConcertado = false
       this.actualizarConcertacion(data);
     }
@@ -372,7 +383,7 @@ export class AsignaturasComponent implements OnInit {
   }
 
 
-asignarConcertacion(concertacion:any){
-  this.concertToDelente = concertacion;
-}
+  asignarConcertacion(concertacion: any) {
+    this.concertToDelente = concertacion;
+  }
 }

@@ -46,6 +46,7 @@
           <option>Seleccione</option>
           <option selected="Seleccione" *ngFor="let concertacion of ConcertSelect" [value]="concertacion.id_concertacion">{{concertacion.nom_concertacion}} {{concertacion.valor_porcentual}}%</option>
         </select>
+        <button *ngIf="conSelect" (click)="calcularDef()" type="button" class="btn btn-outline-primary mb-2 ml-2"  name="button">Calcular Definitiva</button>
           <button *ngIf="conSelect" (click)="guardarTodos(students)" type="button" class="btn btn-primary mb-2 ml-2 float-right"  name="button"><i class="fas fa-save mr-1"></i> Guardar Todos</button>
 
           <input *ngIf="conSelect" style="width:20%;" (change)="searchEstudiante(buscar.value)" #buscar class="form-control mb-3 float-right" type="text" placeholder="Search">
@@ -65,6 +66,7 @@
             <!--th *ngFor="let concertacion of ConcertSelect; let i = index" scope="col">{{concertacion.valor_porcentual}}% <br> ({{concertacion.nom_concertacion}})</th-->
             <th style="width:15%;">Nota</th>
             <th>Comentarios</th>
+            <th *ngIf="verDef">Definitiva</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -77,6 +79,8 @@
               <div style="margin-left:35%;"><input class="form-control" [(ngModel)]="est.nota" name="nota" #nota type="number" min="0" max="5" [value]="est.nota" style="width:80px;"></div>
             </td>
             <td><textarea maxlength="100" [(ngModel)]="est.comentario" [value]="est.comentario" name="comentario" #comentario="ngModel" type="text" class="form-control"></textArea></td>
+            <td *ngIf="verDef && est.definitiva > 2.9499" style="color:green;">{{est.definitiva}}</td>
+            <td *ngIf="verDef && est.definitiva < 2.95" style="color:red;">{{est.definitiva}}</td>
             <td>
               <button (click)="guardarRow(est)" title="Guardar" type="button" style="margin-left:5px;" class="btn btn-outline-primary" name="button"><i class="far fa-save"></i></button>
             </td>
