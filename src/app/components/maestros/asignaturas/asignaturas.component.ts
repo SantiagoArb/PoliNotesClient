@@ -166,6 +166,7 @@ export class AsignaturasComponent implements OnInit {
       this.estado = <any>data;
       new Promise(resolve => setTimeout(() => resolve(), 2000)).then(() => {
         this.cargarEstudiantes(this.matSelected);
+        this.CargarNotas(this.conSelect);
         this.estado = null;
       });
 
