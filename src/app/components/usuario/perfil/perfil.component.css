@@ -4,6 +4,12 @@
 padding: 10px;
 }
 
+.div-img{
+  border: 1px solid black;
+  height: 150px;
+  width: 150px;
+}
+
 
 .img-font{
 

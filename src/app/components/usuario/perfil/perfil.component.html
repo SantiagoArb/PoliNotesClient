@@ -5,59 +5,67 @@
 </header>
 
 
-  <div class="row">
+<div class="row">
 
 
-    <div class="col-2">
-      <app-sidebar></app-sidebar>
-    </div>
-    <div class="col-10 div-content">
-      <div class=" animated fadeIn fast content">
+  <div class="col-2">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="col-10 div-content">
+    <div class=" animated fadeIn fast content">
+      <div class="container" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12); ">
         <div class="container">
-          <h1>{{perfil.nick_USER | uppercase }}</h1>
-          <h3>{{perfil.doc_USER}}</h3>
-        <form #forma="ngForm" (ngSubmit)="actualizar(forma)">
+          <div class="row">
+              <img class="m-3" src="assets/images/prof.png" alt="" width="120" height="120">
+              <h3 class="ml-5 mt-5">Usuario: <span style="font-style: normal;">{{perfil.nick_USER}}</span></h3>
+              <br>
+              <h3 class="ml-3 mt-5">Documento: <span>{{perfil.doc_USER}}</span></h3>
+
+          </div>
+
+          <form #forma="ngForm" (ngSubmit)="actualizar(forma)">
+            <br>
+
+
+            <div class="form-row">
+              <div class="form-group col-3">
+                <label for="inputname">Nombres</label>
+                <input [(ngModel)]="perfil.nombre_USER" name="nombre" required #nombre="ngModel" type="text" class="form-control" id="inputname" placeholder="">
+              </div>
+              <div class="form-group col-md-3">
+                <label for="inputlastname">Apellidos</label>
+                <input [(ngModel)]="perfil.apellidos_USER" name="apellidos" required #apellidos="ngModel" type="text" id="inputlastname" class="form-control" placeholder="">
+              </div>
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col-md-3">
+                <label for="inputemail">Correo</label>
+                <input [(ngModel)]="perfil.correo_USER" name="correo" required #correo="ngModel" type="text" id="inputemail" class="form-control" placeholder="">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-3">
+                <label for="inputcel">Celular</label>
+                <input [(ngModel)]="perfil.celular_USER" name="celular" required #celular="ngModel" type="text" class="form-control" id="inputcel" placeholder="">
+              </div>
+            </div>
+            <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">Actualizar</button>
+          </form>
+        </div>
         <br>
-
-
-        <div class="form-row">
-          <div class="form-group col-3">
-            <label for="inputname">Nombres</label>
-            <input [(ngModel)]="perfil.nombre_USER" name="nombre" required #nombre="ngModel" type="text" class="form-control" id="inputname" placeholder="">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="inputlastname">Apellidos</label>
-            <input [(ngModel)]="perfil.apellidos_USER" name="apellidos" required #apellidos="ngModel" type="text" id="inputlastname" class="form-control" placeholder="">
-          </div>
+        <br>
+        <div *ngIf="estado === 'error'" class="alert alert-danger" role="alert">
+          Ocurrio un error con la Actualizacion.
         </div>
-
-        <div class="form-row">
-          
-          <div class="form-group col-md-3">
-            <label for="inputemail">Correo</label>
-            <input [(ngModel)]="perfil.correo_USER" name="correo" required #correo="ngModel" type="text" id="inputemail" class="form-control" placeholder="">
-          </div>
+        <div *ngIf="estado === 'ok'" class="alert alert-success" role="alert">
+          Informacion actualizada exitosamente!
         </div>
-        <div class="form-row">
-          <div class="form-group col-3">
-            <label for="inputcel">Celular</label>
-            <input [(ngModel)]="perfil.celular_USER" name="celular" required #celular="ngModel" type="text" class="form-control" id="inputcel" placeholder="">
-          </div>
-        </div>
-        <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">Actualizar</button>
-      </form>
-      </div>
-      <br>
-      <br>
-      <div *ngIf="estado === 'error'" class="alert alert-danger" role="alert">
-      Ocurrio un error con la Actualizacion.
-      </div>
-      <div *ngIf="estado === 'ok'" class="alert alert-success" role="alert">
-      Informacion actualizada exitosamente!
-      </div>
       </div>
     </div>
   </div>
+</div>
 
 <footer>
   <app-footer></app-footer>

@@ -35,7 +35,7 @@
             <tr>
               <th scope="col">Documento</th>
               <th scope="col">Nombre</th>
-              <th *ngFor="let concertacion of ConcertSelect; let i = index" scope="col">{{concertacion.porcentaje}}% <br> ({{concertacion.nombre_conertacion}})</th>
+              <th *ngFor="let concertacion of ConcertSelect; let i = index" scope="col">{{concertacion.nombre_conertacion}} <br>{{concertacion.porcentaje}}% </th>
               <th scope="col">Definitiva</th>
               <!--th>
               <div *ngIf="ConcertSelect" class="container">
